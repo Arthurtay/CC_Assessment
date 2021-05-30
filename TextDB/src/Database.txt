@@ -1,0 +1,34 @@
+1,haadee,Tampines Mall,29/05/2021 12:02:31
+2,main,Century Square,29/05/2021 12:02:32
+3,Fuhrer,Tampines Mall,29/05/2021 12:02:33
+5,mime,Lavender Station,29/05/2021 14:24:42
+6,yahoo,Lavender Station,29/05/2021 14:25:14
+7,haadee,Sengkang Mall,29/05/2021 21:21:46
+8,mime,CK,29/05/2021 21:44:57
+9,mime,Vivo,29/05/2021 21:52:35
+10,haadee,CK,29/05/2021 21:52:52
+11,yoz,Tampines Mall,29/05/2021 21:55:22
+12,haadee,Sengkang Mall,29/05/2021 21:55:40
+13,yozo,ION,29/05/2021 22:24:07
+14,yahoo,ION,29/05/2021 22:25:42
+15,yozo,vivo,29/05/2021 22:28:42
+16,bozo,vivo,29/05/2021 22:28:58
+17,haadee,CK,29/05/2021 22:29:40
+17,jojo,CK,29/05/2021 22:30:19
+18,haadee,vivo,29/05/2021 22:59:15
+19,Fuhrer,Kallang station,29/05/2021 22:59:48
+20,main,Century Square,29/05/2021 23:00:36
+21,mime,Tampines Mall,29/05/2021 23:02:03
+22,ali,Madison,29/05/2021 23:13:48
+23,frazier,Madison,29/05/2021 23:14:00
+26,tevin,Mexico,29/05/2021 23:15:45
+25,mayweather,Mexico,29/05/2021 23:15:30
+24,floyd,Mexico,29/05/2021 23:15:15
+26,suga,usa,29/05/2021 23:18:42
+25,ryan,usa,29/05/2021 23:18:35
+31,jason,japan,29/05/2021 23:20:13
+30,farmy,japan,29/05/2021 23:20:02
+32,jake,Arcade,30/05/2021 19:45:02
+33,logan,Arcade,30/05/2021 19:45:10
+34,arthur,Tampines Mall,30/05/2021 20:12:59
+35,haadee,Tampines Mall,30/05/2021 20:13:10
