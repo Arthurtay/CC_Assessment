@@ -88,9 +88,11 @@ public class officerClient {
 				try {
 					System.out.println("Please enter date and time in this format: dd/MM/yyyy HH:mm:ss");
 					String dateInput = sc.nextLine();
-					Date newDateAlert = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(dateInput);
+					Date newDateAlert = new SimpleDateFormat("dd/MM/yyyy").parse(dateInput);
 					File f =new File("covid_location.txt");
 					PrintWriter pw = new PrintWriter(new FileOutputStream(f,true));
+					
+					String printedDateAlert = dateFormat.format(newDateAlert);
 					
 					Calendar d = Calendar.getInstance();
 					d.setTime(newDateAlert);
@@ -98,11 +100,11 @@ public class officerClient {
 					d.add(Calendar.DAY_OF_MONTH, 14);
 					String newDatePost = dateFormat.format(d.getTime());
 					
-					pw.append(locationCovid +","+ newDateAlert +","+newDatePost + "\n");
+					pw.append(locationCovid +","+ printedDateAlert +","+newDatePost + "\n");
 					pw.close();
 					
 					System.out.println("Updated Record");
-					System.out.println("Location: " + locationCovid + " is at risk from " + newDateAlert + " to "+ newDatePost);
+					System.out.println("Location: " + locationCovid + " is at risk from " + printedDateAlert + " to "+ newDatePost);
 				
 				} catch (IOException | ParseException e) {
 					// TODO Auto-generated catch block
