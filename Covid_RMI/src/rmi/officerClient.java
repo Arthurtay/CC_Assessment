@@ -1,14 +1,18 @@
 package rmi;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class officerClient {
@@ -17,10 +21,7 @@ public class officerClient {
 		
 		officerClient oc = new officerClient();
 		
-		// get date time
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
-	    Date date = new Date();  
-	    String dateAlert = dateFormat.format(date);
+		
 		// check difference in date if lesser than 14 days
 		// datePost : dayAlert + 14 days
 //		try {
@@ -50,13 +51,37 @@ public class officerClient {
 		System.out.println("Declare Location at risk now? (y/n)");
 		String dateState = sc.nextLine();
 		
-		oc.InsertLocation(locationCovid, dateState, dateAlert);
+		oc.InsertLocation(locationCovid, dateState);
+		oc.storeTextToArray();
+		
 	}
 	
+	public void storeTextToArray(){
+		try {
+			BufferedReader in = new BufferedReader(new FileReader("covid_location.txt"));
+			String str=null;
+			
+			List<String> arrayOfInfectedLocations = new ArrayList<String>();
+			
+			while((str = in.readLine()) != null) {
+				arrayOfInfectedLocations.add(str);
+			}
+			
+			for (String i: arrayOfInfectedLocations) {
+				System.out.println(i);
+			}
+		}
+		catch (IOException e){
+			e.printStackTrace();
+		}
+	}
 	
-	
-	public String InsertLocation(String locationCovid, String dateState, String dateAlert) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); 
+	public void InsertLocation(String locationCovid, String dateState) {
+		// get date time
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+	    Date date = new Date();  
+	    String dateAlert = dateFormat.format(date);
+		
 		Scanner sc= new Scanner(System.in);
 		// date after 14 days
 		// instantiate calendar
@@ -86,7 +111,7 @@ public class officerClient {
 			else if (dateState.toLowerCase().equals("n")) {
 				
 				try {
-					System.out.println("Please enter date and time in this format: dd/MM/yyyy HH:mm:ss");
+					System.out.println("Please enter date and time in this format: dd/MM/yyyy");
 					String dateInput = sc.nextLine();
 					Date newDateAlert = new SimpleDateFormat("dd/MM/yyyy").parse(dateInput);
 					File f =new File("covid_location.txt");
@@ -112,7 +137,7 @@ public class officerClient {
 				}
 			}
 	    
-		return dateAlert;
+		
 	}
 	
 }
