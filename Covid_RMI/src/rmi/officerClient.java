@@ -51,29 +51,59 @@ public class officerClient {
 		System.out.println("Declare Location at risk now? (y/n)");
 		String dateState = sc.nextLine();
 		
+		// test String for location Input
+		String testLocation = "JEM";
+		
 		oc.InsertLocation(locationCovid, dateState);
-		oc.storeTextToArray();
+		oc.getLatestLocationDate(testLocation, oc.storeTextToArray());
 		
 	}
 	
-	public void storeTextToArray(){
+	public String getLatestLocationDate(String locationInput, ArrayList<String> array){
+		
+		List<String> endOfInfection = new ArrayList<String>();
+		
+		// iterates through list and returns list with specified string value
+		for (String i: array) {
+			if (i.trim().contains(locationInput)) {
+//				System.out.println(i);
+				while (true) {
+					endOfInfection.add(i.substring(i.indexOf("[") +1, i.indexOf("]")));
+					break;
+				}
+				
+			}
+		}
+		
+		String latestLocationDate = endOfInfection.get(endOfInfection.size()-1);
+		
+		System.out.println("\nLatest time: " + latestLocationDate);
+		
+		return latestLocationDate;
+	}
+	
+	public ArrayList<String> storeTextToArray() throws FileNotFoundException{
+		BufferedReader in = new BufferedReader(new FileReader("covid_location.txt"));
+		String str=null;
+		
+		ArrayList<String> arrayOfInfectedLocations = new ArrayList<String>();
 		try {
-			BufferedReader in = new BufferedReader(new FileReader("covid_location.txt"));
-			String str=null;
 			
-			List<String> arrayOfInfectedLocations = new ArrayList<String>();
 			
 			while((str = in.readLine()) != null) {
 				arrayOfInfectedLocations.add(str);
 			}
 			
-			for (String i: arrayOfInfectedLocations) {
-				System.out.println(i);
-			}
+			// display array
+//			for (String i: arrayOfInfectedLocations) {
+//				System.out.println(i);
+//			}
+			
 		}
 		catch (IOException e){
 			e.printStackTrace();
 		}
+		return arrayOfInfectedLocations;
 	}
 	
 	public void InsertLocation(String locationCovid, String dateState) {
@@ -97,7 +127,7 @@ public class officerClient {
 				PrintWriter pw;
 				try {
 					pw = new PrintWriter(new FileOutputStream(f,true));
-					pw.append(locationCovid +","+ dateAlert +","+datePost + "\n");
+					pw.append(locationCovid +","+ dateAlert +","+ "[" +datePost + "]" +"\n");
 					pw.close();
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
@@ -125,7 +155,7 @@ public class officerClient {
 					d.add(Calendar.DAY_OF_MONTH, 14);
 					String newDatePost = dateFormat.format(d.getTime());
 					
-					pw.append(locationCovid +","+ printedDateAlert +","+newDatePost + "\n");
+					pw.append(locationCovid +","+ printedDateAlert +","+ "[" +newDatePost + "]" + "\n");
 					pw.close();
 					
 					System.out.println("Updated Record");
