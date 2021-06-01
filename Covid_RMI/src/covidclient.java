@@ -41,7 +41,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject {
 		 
 		 
 		 
-	  SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");	 
+	  SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");	 
 	  Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
 	  
 	  try {
@@ -82,6 +82,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject {
 			 
 			 ArrayList<Person> listofPeople = new ArrayList<Person>() ;
 			 String state ;
+			 
 			 do {
 				 System.out.println("Enter Your Name");
 				 String name = sc.nextLine();

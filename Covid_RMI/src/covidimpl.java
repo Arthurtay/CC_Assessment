@@ -120,7 +120,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	}
 
 
-	
+	//I think just remove this
 	public void multipleCheckOut(Person p) throws RemoteException {
 		// TODO Auto-generated method stub
 		
