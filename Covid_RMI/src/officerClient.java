@@ -79,8 +79,81 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 		// test String for location Input
 		String testLocation = "JEM";
 		
-		InsertLocation(locationCovid, dateState);
-		o.getLatestLocationDate(testLocation, o.storeTextToArray());
+		
+		
+		// get date time
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+	    Date date = new Date();  
+	    String dateAlert = dateFormat.format(date);
+		// date after 14 days
+		// instantiate calendar
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date());
+		c.add(Calendar.DAY_OF_MONTH, 14);
+		String datePost = dateFormat.format(c.getTime());
+		
+		if (dateState.toLowerCase().equals("y")){
+				
+				System.out.println(dateAlert);
+				File f =new File("covid_location.txt");
+				PrintWriter pw;
+				try {
+					pw = new PrintWriter(new FileOutputStream(f,true));
+					pw.append(locationCovid +","+ dateAlert +","+ "[" +datePost + "]" +"\n");
+					
+					pw.close();
+					
+					InfectedLocation IL = new InfectedLocation(locationCovid, dateAlert, datePost);
+					
+					o.storeTextToArray(IL);
+					
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+				System.out.println("Updated Record");
+				System.out.println("Location: " + locationCovid + " is at risk from " + dateAlert + " to "+ datePost);
+			}
+			else if (dateState.toLowerCase().equals("n")) {
+				
+				try {
+					System.out.println("Please enter date and time in this format: dd/MM/yyyy");
+					String dateInput = sc.nextLine();
+					Date newDateAlert = new SimpleDateFormat("dd/MM/yyyy").parse(dateInput);
+					File f =new File("covid_location.txt");
+					PrintWriter pw = new PrintWriter(new FileOutputStream(f,true));
+					
+					String printedDateAlert = dateFormat.format(newDateAlert);
+					
+					Calendar d = Calendar.getInstance();
+					d.setTime(newDateAlert);
+					
+					d.add(Calendar.DAY_OF_MONTH, 14);
+					String newDatePost = dateFormat.format(d.getTime());
+					
+					pw.append(locationCovid +","+ printedDateAlert +","+ "[" +newDatePost + "]" + "\n");
+					
+					pw.close();
+					
+					InfectedLocation IL = new InfectedLocation(locationCovid, printedDateAlert, newDatePost);
+					
+					o.storeTextToArray(IL);
+					
+					System.out.println("Updated Record");
+					System.out.println("Location: " + locationCovid + " is at risk from " + printedDateAlert + " to "+ newDatePost);
+					
+					
+				} catch (IOException | ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		
+		
+//		InsertLocation(locationCovid, dateState);
 //		oc.getLatestLocationDate(testLocation, oc.storeTextToArray());
 		
 	}
@@ -132,68 +205,6 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 //		return arrayOfInfectedLocations;
 //	}
 //	
-	public static void InsertLocation(String locationCovid, String dateState) {
-		// get date time
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
-	    Date date = new Date();  
-	    String dateAlert = dateFormat.format(date);
-		
-		Scanner sc= new Scanner(System.in);
-		// date after 14 days
-		// instantiate calendar
-		Calendar c = Calendar.getInstance();
-		c.setTime(new Date());
-		c.add(Calendar.DAY_OF_MONTH, 14);
-		String datePost = dateFormat.format(c.getTime());
-		
-		if (dateState.toLowerCase().equals("y")){
-				
-				System.out.println(dateAlert);
-				File f =new File("covid_location.txt");
-				PrintWriter pw;
-				try {
-					pw = new PrintWriter(new FileOutputStream(f,true));
-					pw.append(locationCovid +","+ dateAlert +","+ "[" +datePost + "]" +"\n");
-					pw.close();
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				
-				System.out.println("Updated Record");
-				System.out.println("Location: " + locationCovid + " is at risk from " + dateAlert + " to "+ datePost);
-			}
-			else if (dateState.toLowerCase().equals("n")) {
-				
-				try {
-					System.out.println("Please enter date and time in this format: dd/MM/yyyy");
-					String dateInput = sc.nextLine();
-					Date newDateAlert = new SimpleDateFormat("dd/MM/yyyy").parse(dateInput);
-					File f =new File("covid_location.txt");
-					PrintWriter pw = new PrintWriter(new FileOutputStream(f,true));
-					
-					String printedDateAlert = dateFormat.format(newDateAlert);
-					
-					Calendar d = Calendar.getInstance();
-					d.setTime(newDateAlert);
-					
-					d.add(Calendar.DAY_OF_MONTH, 14);
-					String newDatePost = dateFormat.format(d.getTime());
-					
-					pw.append(locationCovid +","+ printedDateAlert +","+ "[" +newDatePost + "]" + "\n");
-					pw.close();
-					
-					System.out.println("Updated Record");
-					System.out.println("Location: " + locationCovid + " is at risk from " + printedDateAlert + " to "+ newDatePost);
-				
-				} catch (IOException | ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-	    
-		
-	}
+	
 	
 }

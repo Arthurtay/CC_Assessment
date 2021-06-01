@@ -14,12 +14,16 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	
 	private ArrayList<Person> Database = new ArrayList<Person>() ;
 	
+	private ArrayList<InfectedLocation> LocationLog = new ArrayList<InfectedLocation>();
+	
     public covidimpl() throws java.rmi.RemoteException {
         super();
        
     
   	  File file = new File("Database.txt");
-	 
+  	  
+  	  File fileLocation = new File("covid_location.txt");
+  	  
   	  try {
   		  BufferedReader br = new BufferedReader(new FileReader(file));
   		  String st;
@@ -36,16 +40,40 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
   		 
   			  Database.add(ppl); 
   		 
-  			  System.out.println("This is the end of 1 line" );
+  			  System.out.println("--------------------------------" );
   		
   		  }
   	  }
   	  catch(Exception e) {
   		  System.out.println(e);
   	  }
+  	  
+  	  try {
+  		  BufferedReader br = new BufferedReader(new FileReader(fileLocation));
+  		  String st;
+  		 while ((st = br.readLine()) != null) 
+ 		  {
+ 		 //For each line being read. split the text by delimiter comma.
+ 			  String[] tokens = st.split(","); 
+ 			  System.out.println(tokens[0]);
+ 			  System.out.println(tokens[1]);
+ 			  System.out.println(tokens[2]);
+ 			  InfectedLocation InfectedLog = new InfectedLocation(tokens[0],tokens[1],tokens[2]); 
+ 		 
+ 			  LocationLog.add(InfectedLog); 
+ 		 
+ 			  System.out.println("--------------------------------" );
+ 		
+ 		  }
+  		  
+  		  
+  	  }catch(Exception e) {
+  		  System.out.println(e);
+  	  }
         
         //Implement and load data from text file
     }
+    
 
     
 
@@ -122,7 +150,15 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	}
 
 
-	//I think just remove this
+
+
+
+
+
+
+
+
+	@Override
 	public void multipleCheckOut(Person p) throws RemoteException {
 		// TODO Auto-generated method stub
 		
@@ -130,56 +166,36 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 
 
 
+
 	@Override
-	public ArrayList<String> storeTextToArray() throws RemoteException, IOException {
-		BufferedReader in = new BufferedReader(new FileReader("covid_location.txt"));
-		String str=null;
-		
-		ArrayList<String> arrayOfInfectedLocations = new ArrayList<String>();
+	public void storeTextToArray(InfectedLocation IL) throws RemoteException, IOException {
 		try {
-			
-			
-			while((str = in.readLine()) != null) {
-				arrayOfInfectedLocations.add(str);
-			}
-			
-//			 display array
-			for (String i: arrayOfInfectedLocations) {
-				System.out.println(i);
-			}
-			
-		}
-		catch (IOException e){
-			e.printStackTrace();
-		}
-		return arrayOfInfectedLocations;
+		      
+			  
+			  File f  = new File("covid_location.txt");
+			  PrintWriter write =   new PrintWriter(new FileOutputStream(f,true));
+			   
+			  System.out.println("check in sucessfully");
+			  
+	  		  InfectedLocation InfectedLog = new InfectedLocation(IL.location, IL.dateInfection, IL.datePostInfection); 
+	  		  LocationLog.add(InfectedLog); 
+	  		 
+			  
+			  
+		 }catch(Exception e) {
+			  System.out.println(e);
+			 
+		 }
 	}
 
 
 
+
 	@Override
-	public String getLatestLocationDate(String locationInput, ArrayList<String> array) throws RemoteException {
-		List<String> endOfInfection = new ArrayList<String>();
-		String latestLocationDate = null;
-		// iterates through list and returns list with specified string value
-		for (String i: array) {
-			if (i.trim().contains(locationInput)) {
-//				System.out.println(i);
-				while (true) {
-					endOfInfection.add(i.substring(i.indexOf("[") +1, i.indexOf("]")));
-					latestLocationDate = endOfInfection.get(endOfInfection.size()-1);
-					
-					System.out.println("\nLatest time: " + latestLocationDate);
-					break;
-				}
-				
-			}
-			else {
-				System.out.println(locationInput + " is not suspected of any covid cases.");
-				latestLocationDate = null;
-			}
-		}
-				return latestLocationDate;
+	public String getLatestLocationDate(String locationInput, ArrayList<InfectedLocation> LocationLog)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -2,3 +2,5 @@
 /covid_location.txt
 /officer.class
 /officerClient.class
+/InfectedLocation.class
+/Officer_Client.class
