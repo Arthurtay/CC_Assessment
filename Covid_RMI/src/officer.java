@@ -7,7 +7,7 @@ public interface officer extends java.rmi.Remote {
 
 	public void storeTextToArray(InfectedLocation IL) throws java.rmi.RemoteException, IOException;
 	
-	public String getLatestLocationDate(String locationInput, ArrayList<InfectedLocation> LocationLog) throws java.rmi.RemoteException;
+	public String getLatestLocationDate(String locationInput) throws java.rmi.RemoteException;
 
 	
 }

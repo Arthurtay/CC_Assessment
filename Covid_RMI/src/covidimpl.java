@@ -192,7 +192,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 
 
 	@Override
-	public String getLatestLocationDate(String locationInput, ArrayList<InfectedLocation> LocationLog)
+	public String getLatestLocationDate(String locationInput)
 			throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
