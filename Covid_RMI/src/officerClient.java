@@ -151,7 +151,7 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 				}
 			}
 
-		
+		o.getLatestLocationDate(testLocation);
 		
 //		InsertLocation(locationCovid, dateState);
 //		oc.getLatestLocationDate(testLocation, oc.storeTextToArray());

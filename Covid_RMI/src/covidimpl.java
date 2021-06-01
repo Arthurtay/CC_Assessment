@@ -194,7 +194,30 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	@Override
 	public String getLatestLocationDate(String locationInput)
 			throws RemoteException {
-		// TODO Auto-generated method stub
+		
+		File fileLocation = new File("covid_location.txt");
+	  	  
+	  	  try {
+	  		  BufferedReader br = new BufferedReader(new FileReader(fileLocation));
+	  		  String st;
+	  	  
+	  	  //continuous read file 
+	  		  while ((st = br.readLine()) != null) 
+	  		  {
+	  		 //For each line being read. split the text by delimiter comma.
+	  			  String[] tokens = st.split(","); 
+	  		 
+	  			  if (tokens[0].equals(locationInput)) {
+	  				  System.out.println(tokens[0] + tokens[1] + tokens[2]);
+	  				  
+	  			  }
+	  		
+	  		  }
+	  		  
+	  	  }
+	  	  catch(Exception e) {
+	  		  System.out.println(e);
+	  	  }
 		return null;
 	}
 
