@@ -1,13 +1,15 @@
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.rmi.RemoteException;
 import java.util.*;
 
-public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements covid {
+public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements covid, officer {
 
 	
 	private ArrayList<Person> Database = new ArrayList<Person>() ;
@@ -124,6 +126,60 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	public void multipleCheckOut(Person p) throws RemoteException {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+
+	@Override
+	public ArrayList<String> storeTextToArray() throws RemoteException, IOException {
+		BufferedReader in = new BufferedReader(new FileReader("covid_location.txt"));
+		String str=null;
+		
+		ArrayList<String> arrayOfInfectedLocations = new ArrayList<String>();
+		try {
+			
+			
+			while((str = in.readLine()) != null) {
+				arrayOfInfectedLocations.add(str);
+			}
+			
+			// display array
+//			for (String i: arrayOfInfectedLocations) {
+//				System.out.println(i);
+//			}
+			
+		}
+		catch (IOException e){
+			e.printStackTrace();
+		}
+		return arrayOfInfectedLocations;
+	}
+
+
+
+	@Override
+	public String getLatestLocationDate(String locationInput, ArrayList<String> array) throws RemoteException {
+		List<String> endOfInfection = new ArrayList<String>();
+		String latestLocationDate = null;
+		// iterates through list and returns list with specified string value
+		for (String i: array) {
+			if (i.trim().contains(locationInput)) {
+//				System.out.println(i);
+				while (true) {
+					endOfInfection.add(i.substring(i.indexOf("[") +1, i.indexOf("]")));
+					latestLocationDate = endOfInfection.get(endOfInfection.size()-1);
+					
+					System.out.println("\nLatest time: " + latestLocationDate);
+					break;
+				}
+				
+			}
+			else {
+				System.out.println(locationInput + " is not suspected of any covid cases.");
+				latestLocationDate = null;
+			}
+		}
+				return latestLocationDate;
 	}
 
 }
