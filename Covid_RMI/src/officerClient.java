@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,9 +26,25 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 	
 	
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, NotBoundException {
 		
-		officerClient oc = new officerClient();
+		String reg_host = "localhost";
+		int reg_port = 1099;
+		
+		if (args.length == 1)
+	    {
+	    	reg_port = Integer.parseInt(args[0]);
+	    } 
+	    else if (args.length == 2) 
+	    {
+	    	reg_host = args[0];
+	    	reg_port = Integer.parseInt(args[1]);
+	    }
+		
+		
+		officer o = (officer) Naming.lookup("rmi://" + reg_host + ":" + reg_port + "/OfficerLocationService");
+		
+		
 		
 		
 		// check difference in date if lesser than 14 days
@@ -61,59 +79,60 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 		// test String for location Input
 		String testLocation = "JEM";
 		
-		oc.InsertLocation(locationCovid, dateState);
-		oc.getLatestLocationDate(testLocation, oc.storeTextToArray());
+		InsertLocation(locationCovid, dateState);
+		o.getLatestLocationDate(testLocation, o.storeTextToArray());
+//		oc.getLatestLocationDate(testLocation, oc.storeTextToArray());
 		
 	}
-	
-	public String getLatestLocationDate(String locationInput, ArrayList<String> array){
-		
-		List<String> endOfInfection = new ArrayList<String>();
-		
-		// iterates through list and returns list with specified string value
-		for (String i: array) {
-			if (i.trim().contains(locationInput)) {
-//				System.out.println(i);
-				while (true) {
-					endOfInfection.add(i.substring(i.indexOf("[") +1, i.indexOf("]")));
-					break;
-				}
-				
-			}
-		}
-		
-		String latestLocationDate = endOfInfection.get(endOfInfection.size()-1);
-		
-		System.out.println("\nLatest time: " + latestLocationDate);
-		
-		return latestLocationDate;
-	}
-	
-	public ArrayList<String> storeTextToArray() throws FileNotFoundException{
-		BufferedReader in = new BufferedReader(new FileReader("covid_location.txt"));
-		String str=null;
-		
-		ArrayList<String> arrayOfInfectedLocations = new ArrayList<String>();
-		try {
-			
-			
-			while((str = in.readLine()) != null) {
-				arrayOfInfectedLocations.add(str);
-			}
-			
-			// display array
-//			for (String i: arrayOfInfectedLocations) {
-//				System.out.println(i);
+//	
+//	public String getLatestLocationDate(String locationInput, ArrayList<String> array){
+//		
+//		List<String> endOfInfection = new ArrayList<String>();
+//		
+//		// iterates through list and returns list with specified string value
+//		for (String i: array) {
+//			if (i.trim().contains(locationInput)) {
+////				System.out.println(i);
+//				while (true) {
+//					endOfInfection.add(i.substring(i.indexOf("[") +1, i.indexOf("]")));
+//					break;
+//				}
+//				
 //			}
-			
-		}
-		catch (IOException e){
-			e.printStackTrace();
-		}
-		return arrayOfInfectedLocations;
-	}
-	
-	public void InsertLocation(String locationCovid, String dateState) {
+//		}
+//		
+//		String latestLocationDate = endOfInfection.get(endOfInfection.size()-1);
+//		
+//		System.out.println("\nLatest time: " + latestLocationDate);
+//		
+//		return latestLocationDate;
+//	}
+//	
+//	public ArrayList<String> storeTextToArray() throws FileNotFoundException{
+//		BufferedReader in = new BufferedReader(new FileReader("covid_location.txt"));
+//		String str=null;
+//		
+//		ArrayList<String> arrayOfInfectedLocations = new ArrayList<String>();
+//		try {
+//			
+//			
+//			while((str = in.readLine()) != null) {
+//				arrayOfInfectedLocations.add(str);
+//			}
+//			
+//			// display array
+////			for (String i: arrayOfInfectedLocations) {
+////				System.out.println(i);
+////			}
+//			
+//		}
+//		catch (IOException e){
+//			e.printStackTrace();
+//		}
+//		return arrayOfInfectedLocations;
+//	}
+//	
+	public static void InsertLocation(String locationCovid, String dateState) {
 		// get date time
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
 	    Date date = new Date();  

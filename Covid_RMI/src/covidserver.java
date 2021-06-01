@@ -4,7 +4,6 @@ import java.rmi.Naming;
 
 public class covidserver {
 	static int port = 1099;
-	static int port2 = 1100;
 	public covidserver() {
     try {
     	

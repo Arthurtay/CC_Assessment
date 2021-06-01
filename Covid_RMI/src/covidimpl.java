@@ -18,7 +18,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
         super();
        
     
-  	  File file = new File("D:\\javaworkspace\\Covid_RMI\\src\\Database.txt");
+  	  File file = new File("Database.txt");
 	 
   	  try {
   		  BufferedReader br = new BufferedReader(new FileReader(file));
@@ -55,7 +55,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 		 try {
 		      
 			  
-			  File f  = new File("D:\\javaworkspace\\Covid_RMI\\src\\Database.txt");
+			  File f  = new File("Database.txt");
 			  PrintWriter write =   new PrintWriter(new FileOutputStream(f,true));
 			  write.append(p.nric +","+ p.name +","+ p.location +","+ p.time + "\n");
 			  write.close();  
@@ -79,7 +79,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 		 try {
 		      
 		
-		      File f  = new File("D:\\javaworkspace\\Covid_RMI\\src\\Database.txt");
+		      File f  = new File("Database.txt");
 			  PrintWriter write =   new PrintWriter(new FileOutputStream(f,true));
 			  write.append(p.nric +","+ p.name +","+ p.location +","+ p.time + "\n");
 			  write.close();  
@@ -101,7 +101,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 		try {
 		
 
-		      File f  = new File("D:\\javaworkspace\\Covid_RMI\\src\\Database.txt");
+		      File f  = new File("Database.txt");
 			  PrintWriter write =   new PrintWriter(new FileOutputStream(f,true));
 				
 			  listofPeople.forEach((ppl) -> {
@@ -143,10 +143,10 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 				arrayOfInfectedLocations.add(str);
 			}
 			
-			// display array
-//			for (String i: arrayOfInfectedLocations) {
-//				System.out.println(i);
-//			}
+//			 display array
+			for (String i: arrayOfInfectedLocations) {
+				System.out.println(i);
+			}
 			
 		}
 		catch (IOException e){
