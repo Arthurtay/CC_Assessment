@@ -1,6 +1,6 @@
-package rmi;
+import java.io.Serializable;
 
-public class Person {
+public class Person implements Serializable{
 
 	String nric;
 	String name;
@@ -10,7 +10,7 @@ public class Person {
     //check out or in
     int recordType;
     
-	 public Person(String nric, String name, String location,String time, int suspectCovid) {
+	 public Person(String nric, String name, String location,String time) {
 		 
 		 this.nric = nric;
 		 this.name = name;
@@ -20,6 +20,7 @@ public class Person {
 		 this.recordType = recordType;
 		 
 	 } 
+	 
 	 
 	 
 	
