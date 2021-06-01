@@ -77,7 +77,7 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 		String dateState = sc.nextLine();
 		
 		// test String for location Input
-		String testLocation = "JEM";
+		String testLocation = "Tampines";
 		
 		
 		
@@ -99,7 +99,7 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 				PrintWriter pw;
 				try {
 					pw = new PrintWriter(new FileOutputStream(f,true));
-					pw.append(locationCovid +","+ dateAlert +","+ "[" +datePost + "]" +"\n");
+					pw.append(locationCovid +","+ dateAlert +"," +datePost +"\n");
 					
 					pw.close();
 					
@@ -133,7 +133,7 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 					d.add(Calendar.DAY_OF_MONTH, 14);
 					String newDatePost = dateFormat.format(d.getTime());
 					
-					pw.append(locationCovid +","+ printedDateAlert +","+ "[" +newDatePost + "]" + "\n");
+					pw.append(locationCovid +","+ printedDateAlert +","+ newDatePost + "\n");
 					
 					pw.close();
 					

@@ -175,7 +175,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 			  File f  = new File("covid_location.txt");
 			  PrintWriter write =   new PrintWriter(new FileOutputStream(f,true));
 			   
-			  System.out.println("check in sucessfully");
+			  System.out.println("Updated Infected Location Log");
 			  
 	  		  InfectedLocation InfectedLog = new InfectedLocation(IL.location, IL.dateInfection, IL.datePostInfection); 
 	  		  LocationLog.add(InfectedLog); 
@@ -194,9 +194,9 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	@Override
 	public String getLatestLocationDate(String locationInput)
 			throws RemoteException {
-		
+		String latestLocationDate = null;
 		File fileLocation = new File("covid_location.txt");
-	  	  
+	  	 ArrayList<String> latestTime = new ArrayList<String>();
 	  	  try {
 	  		  BufferedReader br = new BufferedReader(new FileReader(fileLocation));
 	  		  String st;
@@ -208,17 +208,20 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	  			  String[] tokens = st.split(","); 
 	  		 
 	  			  if (tokens[0].equals(locationInput)) {
-	  				  System.out.println(tokens[0] + tokens[1] + tokens[2]);
+	  				  latestTime.add(tokens[2]);
 	  				  
 	  			  }
 	  		
 	  		  }
 	  		  
+	  		latestLocationDate = latestTime.get(latestTime.size()-1);
+	  		System.out.println(locationInput + " is suspected of Covid until " + latestLocationDate);
 	  	  }
 	  	  catch(Exception e) {
 	  		  System.out.println(e);
 	  	  }
-		return null;
+	  	  
+		return latestLocationDate;
 	}
 
 }
