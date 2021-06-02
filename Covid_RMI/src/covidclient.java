@@ -10,14 +10,41 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Scanner;
 import java.util.*;
 
-public class covidclient  extends java.rmi.server.UnicastRemoteObject {
+public class covidclient  extends java.rmi.server.UnicastRemoteObject implements CovidRMIClientInf{
 	
 	
-	
+	@Override
+	public void confirmation(String Message) throws RemoteException {
+		// TODO Auto-generated method stub
+		System.out.println(Message);
+	}
+
+	@Override
+	public void NotifyCovid(ArrayList<InfectedLocation> covidLocation) throws RemoteException {
+		
+		if(covidLocation.isEmpty()) 
+		{
+			System.out.println("There is no supsected exposure of covid");			
+		}
+		else {
+			
+			System.out.println("You are suspected of covid, please monitor your health for the next 14 days");
+			System.out.println("======Location of Exposure=====");
+			for(InfectedLocation loc : covidLocation) {
+				System.out.println("Location : " + loc.location + "Time" + loc.dateInfection);	
+			}
+			
+		}
+				
+	}
+
+	@Override
+	public void retrieveHistory() throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	public covidclient() throws RemoteException{
 		
@@ -41,31 +68,64 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject {
 		 
 		 
 		 
-	  SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");	 
+	  SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");	 
 	  Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
 	  
 	  try {
-		covidclient cc = new covidclient();
+		covidclient client = new covidclient();
 		
-		covid c = (covid)  Naming.lookup("rmi://" + reg_host + ":" + reg_port + "/CovidCheckInService");
+		covid service = (covid)  Naming.lookup("rmi://" + reg_host + ":" + reg_port + "/CovidCheckInService");
 		
 		
 
-	     Scanner sc=new Scanner(System.in);
-		 System.out.println("Welcome to the Check In client");
+	     Scanner sc =new Scanner(System.in);
+		 System.out.println("Enter Your Name");
+		 String name = sc.nextLine();
+	
+		 System.out.println("Enter your NRIC");
+		 String nric = sc.nextLine();
+	     
+		 System.out.println("Welcome to the Check In client" + name + " " + nric + "!"  ); 
+
+		 service.checkCovid(client, nric);
+		 
+		 /*
+		 //Periodically check for covid status if there is suspected covidcases  
+		 Thread checkcovid_thread = new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					Random rg = new Random();
+					int timer = rg.nextInt(10000);  				
+					try {
+						
+						while(true) {
+					  	Thread.sleep(timer);
+						service.checkCovid(client, nric);
+						}
+					} catch (java.rmi.RemoteException e) {
+						e.printStackTrace();
+					} catch(InterruptedException ee) {}
+				}    
+				});
+		
+		 checkcovid_thread.start();		
+		 */
+	     
+	     while(true) {
+		 
 	     System.out.println("Enter Number for Selection");
 		 System.out.println("1.Individual Check In");
 		 System.out.println("2.Group Check In");
-		 int option =  sc.nextInt();
+		 System.out.println("3.Checkout");
+		 int option = Integer.parseInt(sc.nextLine());
 		 
 		 
+
+	    
 		 if(option == 1) {
 			 	
-			 System.out.println("Enter Your Name");
-			 String name = sc.nextLine();
-			
-			 System.out.println("Enter your NRIC");
-			 String nric = sc.nextLine();
+			 System.out.println("====Invididual Check In Selected====");
 			  
 			 System.out.println("Enter your Location");
 			 String location =  sc.nextLine();
@@ -73,53 +133,58 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject {
 			 String time = ft.format(timestamp);
 			 System.out.println(time);
 			 
-			 Person p = new Person(name,nric,location,time);
+			 Person p = new Person(nric,name,location,time);
 			 
-			 c.checkIn(p);
+			 service.checkIn(client,p);
 			 
 		 }
 		 else {
 			 
+			 System.out.println("====Multiple Check In Selected====");
 			 ArrayList<Person> listofPeople = new ArrayList<Person>() ;
-			 String state ;
+			 String state = "y" ;
+	
+		
+			 System.out.println("Enter your Location");
+			 String location =  sc.nextLine();
 			 
-			 do {
-				 System.out.println("Enter Your Name");
-				 String name = sc.nextLine();
+			 String time = ft.format(timestamp);
+			 System.out.println(time);
+			 
+			 //Include Indiviual check In 
+			 Person p = new Person(nric,name,location,time);
+			 listofPeople.add(p);
+			 
+			 //While continues to loop and read other checkin members data
+			 while(state.equals("y"))
+			 {
+				 
+				 System.out.println("Enter Family/Friend Name");
+				 String extra_name = sc.nextLine();
 				
-				 System.out.println("Enter your NRIC");
-				 String nric = sc.nextLine();
-				  
-				 System.out.println("Enter your Location");
-				 String location =  sc.nextLine();
+				 System.out.println("Enter Family/Friend NRIC");
+				 String extra_nric = sc.nextLine();
+				  			 
+				 Person p2 = new Person(extra_nric,extra_name,location,time);
 				 
-				 String time = ft.format(timestamp);
-				 System.out.println(time);
-				 
-				 Person p = new Person(name,nric,location,time);
-				 
-				 listofPeople.add(p);
+				 listofPeople.add(p2);
 				 
 				 System.out.println("Continue group check in?(y/n)" );
 				 state = sc.nextLine();
 				 
-				 }while(state.equals("y")); // end of while loop
+			 }; // end of while loop
 			 
 			 //Invoke remote method 
-			 c.multipleCheckIn(listofPeople);
+			 service.multipleCheckIn(client,listofPeople);
 			 	
 		 }
 		 
+		 service.checkCovid(client, nric);
 		 
-		 
-
-		 
-		
 		 
 		 
 		
-		System.out.println(); 
-	
+	   }//End of While Loop
 		  
 	  }catch(Exception e) {
 		  System.out.println(e);
@@ -155,24 +220,15 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject {
 	  */
 	}
 	 
-	 public static void insert(String name, String nric,String location, String time) {
+	 public static void MultipleCheckIn() {
 		 
 		 
-		 try {
-			  File f  = new File("D:\\javaworkspace\\Covid_RMI\\src\\rmi\\Database.txt");
-			  PrintWriter write =   new PrintWriter(new FileOutputStream(f,true));
-			  write.append(name +","+ nric +","+ location +","+ time + "\n");
-			  write.close();
-			  
-			  System.out.println("check in sucessfully");
-			  
-		 }catch(Exception e) {
-			  System.out.println(e);
-			 
-		 }
+
 		 
 		 
 	 }
+
+
 	 
 	 
 	 
