@@ -287,19 +287,19 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	public void checkCovid(CovidRMIClientInf client, String nric) throws RemoteException {
 		try {
 			ArrayList<InfectedLocation> exposure = new ArrayList<InfectedLocation>();
-			for(InfectedLocation log : LocationLog ) {
-				Date covidDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(log.dateInfection); 
-				System.out.println(log.getLocation() + " "+ log.getDateInfection() +" "+ log.getDatePost());
-				for (Person person : Database) {
-					Date visitDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(person.time); 
-				    
-					if(log.location.equals(person.location) && covidDate.before(visitDate) &&  nric.equals(person.nric)) 
-					{
-						exposure.add(log);
-					}
-				}
+//			for(InfectedLocation log : LocationLog ) {
+//				Date covidDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(log.getDateInfection()); 
+//				for (Person person : Database) {
+//					Date visitDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(person.getTime()); 
+//					if(log.getLocation().equals(person.getLocation()) && covidDate.before(visitDate) &&  nric.equals(person.getNric())) 
+//					{
+//						exposure.add(log);
+//					}
+//				}
+//			}
+			for (Person p : Database) {
+				System.out.println(p.getName());
 			}
-			
 			
 
 			//Set<InfectedLocation> uniqueLocation =  exposure;

@@ -9,3 +9,7 @@ S22W,Haadee,Tampines Mall,03/06/2021 16:27:02
 S22W,Haadee,Tampines Mall,03/06/2021 17:07:31
 S22W,Haadee,JEM,03/06/2021 17:24:33
 S22W,Haadee,ION,03/06/2021 17:35:59
+S22W,Haadee,Tampines Mall,03/06/2021 17:51:09
+S22W,Haadee,Tampines Mall,03/06/2021 17:55:48
+S22W,Haadee,Tampines Mall,03/06/2021 17:58:37
+S22W,Haadee,ION,03/06/2021 18:00:47
