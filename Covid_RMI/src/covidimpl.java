@@ -130,13 +130,6 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 			
 			 checkInThread.start();		
 			 
-			 
-
-	  		 
-			  
-	
-			 
-
 	}
 
 
@@ -168,9 +161,6 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 
 	
 	public void multipleCheckIn(CovidRMIClientInf client,ArrayList<Person> listofPeople) throws RemoteException {
-		
-		      
-			
 			
 			 Thread checkInThread = new Thread(new Runnable() {
 
@@ -212,14 +202,6 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 					});
 			
 			 checkInThread.start();	
-			 
-
-			
-			
-
- 
-		
-		
 		
 	}
 
@@ -332,8 +314,32 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 		}
 			
 		
-		
-		
+	}
+
+
+
+
+	@Override
+	public String insertLog(String locationCovid, String dateAlert, String datePost) {
+		// TODO Auto-generated method stub
+		String result = null;
+		File f =new File("covid_location.txt");
+		PrintWriter pw;
+		try {
+			pw = new PrintWriter(new FileOutputStream(f,true));
+			pw.append(locationCovid +","+ dateAlert +"," +datePost +"\n");
+			
+			pw.close();
+			
+			InfectedLocation IL = new InfectedLocation(locationCovid, dateAlert, datePost);
+			
+			storeTextToArray(IL);
+			result = "Update Record \n"+ "Location: " + locationCovid + " is at risk from " + dateAlert + " to "+ datePost;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 }

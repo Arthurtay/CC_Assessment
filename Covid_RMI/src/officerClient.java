@@ -95,26 +95,7 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 		if (dateState.toLowerCase().equals("y")){
 				
 				System.out.println(dateAlert);
-				File f =new File("covid_location.txt");
-				PrintWriter pw;
-				try {
-					pw = new PrintWriter(new FileOutputStream(f,true));
-					pw.append(locationCovid +","+ dateAlert +"," +datePost +"\n");
-					
-					pw.close();
-					
-					InfectedLocation IL = new InfectedLocation(locationCovid, dateAlert, datePost);
-					
-					o.storeTextToArray(IL);
-					
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				
-				System.out.println("Updated Record");
-				System.out.println("Location: " + locationCovid + " is at risk from " + dateAlert + " to "+ datePost);
+				o.insertLog(locationCovid, dateAlert, datePost);
 			}
 			else if (dateState.toLowerCase().equals("n")) {
 				
@@ -122,9 +103,6 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 					System.out.println("Please enter date and time in this format: dd/MM/yyyy");
 					String dateInput = sc.nextLine();
 					Date newDateAlert = new SimpleDateFormat("dd/MM/yyyy").parse(dateInput);
-					File f =new File("covid_location.txt");
-					PrintWriter pw = new PrintWriter(new FileOutputStream(f,true));
-					
 					String printedDateAlert = dateFormat.format(newDateAlert);
 					
 					Calendar d = Calendar.getInstance();
@@ -133,78 +111,20 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 					d.add(Calendar.DAY_OF_MONTH, 14);
 					String newDatePost = dateFormat.format(d.getTime());
 					
-					pw.append(locationCovid +","+ printedDateAlert +","+ newDatePost + "\n");
-					
-					pw.close();
-					
-					InfectedLocation IL = new InfectedLocation(locationCovid, printedDateAlert, newDatePost);
-					
-					o.storeTextToArray(IL);
-					
-					System.out.println("Updated Record");
-					System.out.println("Location: " + locationCovid + " is at risk from " + printedDateAlert + " to "+ newDatePost);
-					
-					
-				} catch (IOException | ParseException e) {
+					o.insertLog(locationCovid, printedDateAlert, newDatePost);
+				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
 			}
 
 		o.getLatestLocationDate(testLocation);
 		
-//		InsertLocation(locationCovid, dateState);
-//		oc.getLatestLocationDate(testLocation, oc.storeTextToArray());
+		
 		
 	}
-//	
-//	public String getLatestLocationDate(String locationInput, ArrayList<String> array){
-//		
-//		List<String> endOfInfection = new ArrayList<String>();
-//		
-//		// iterates through list and returns list with specified string value
-//		for (String i: array) {
-//			if (i.trim().contains(locationInput)) {
-////				System.out.println(i);
-//				while (true) {
-//					endOfInfection.add(i.substring(i.indexOf("[") +1, i.indexOf("]")));
-//					break;
-//				}
-//				
-//			}
-//		}
-//		
-//		String latestLocationDate = endOfInfection.get(endOfInfection.size()-1);
-//		
-//		System.out.println("\nLatest time: " + latestLocationDate);
-//		
-//		return latestLocationDate;
-//	}
-//	
-//	public ArrayList<String> storeTextToArray() throws FileNotFoundException{
-//		BufferedReader in = new BufferedReader(new FileReader("covid_location.txt"));
-//		String str=null;
-//		
-//		ArrayList<String> arrayOfInfectedLocations = new ArrayList<String>();
-//		try {
-//			
-//			
-//			while((str = in.readLine()) != null) {
-//				arrayOfInfectedLocations.add(str);
-//			}
-//			
-//			// display array
-////			for (String i: arrayOfInfectedLocations) {
-////				System.out.println(i);
-////			}
-//			
-//		}
-//		catch (IOException e){
-//			e.printStackTrace();
-//		}
-//		return arrayOfInfectedLocations;
-//	}
-//	
 	
+
 	
 }
