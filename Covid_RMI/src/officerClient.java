@@ -56,7 +56,7 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 //			long diff_day = (diff_time
 //	                   / (1000 * 60 * 60 * 24))
 //	                  % 365;
-////						System.out.println(diff_day);
+//						System.out.println(diff_day);
 //		
 //			
 //		} catch (ParseException e1) {

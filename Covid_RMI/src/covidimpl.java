@@ -286,7 +286,34 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	@Override
 	public void checkCovid(CovidRMIClientInf client, String nric) throws RemoteException {
 		try {
-			ArrayList<InfectedLocation> exposure = new ArrayList<InfectedLocation>();
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+			String result = null;
+
+			for (Person p : Database) {
+				if (p.getNric().equals(nric)) {
+					for (InfectedLocation Log: LocationLog) {
+						if(p.getLocation().equals(Log.getLocation())) {
+							Date clientDate = dateFormat.parse(p.getTime());
+							Date covidDate = dateFormat.parse(Log.getDateInfection());
+							Date covidEndDate = dateFormat.parse(Log.getDatePost());
+							if (clientDate.before(covidDate)) {
+								System.out.println("safe");
+							}
+							else if (clientDate.after(covidDate) && (time_diff(covidEndDate, clientDate)< 0)) {
+								System.out.print("Damn safe");
+							}
+							else {
+								result = (p.getNric()+ " is suspected of covid at "+ Log.getLocation() + "during on " + p.getTime());
+								System.out.println(result);
+								SuspectedCovid sc = new SuspectedCovid(p.getNric(), Log.getLocation(), p.getTime());
+								client.NotifyCovid(suspectC, nric);
+							}
+						}
+					}
+				}
+			}
+			
+//			ArrayList<InfectedLocation> exposure = new ArrayList<InfectedLocation>();
 //			for(InfectedLocation log : LocationLog ) {
 //				Date covidDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(log.getDateInfection()); 
 //				for (Person person : Database) {
@@ -297,13 +324,8 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 //					}
 //				}
 //			}
-			for (Person p : Database) {
-				System.out.println(p.getName());
-			}
-			
-
 			//Set<InfectedLocation> uniqueLocation =  exposure;
-			client.NotifyCovid(exposure);	
+//			client.NotifyCovid(exposure);	
 		}
 		catch(Exception e) {
 			System.out.println(e);
@@ -312,7 +334,15 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 		
 	}
 
-
+	
+	@Override
+	public long time_diff(Date firstTime, Date secondTime) {
+		long diff_time = firstTime.getTime() - secondTime.getTime();
+		long difference = (diff_time
+                   / (1000 * 60 * 60 * 24))
+                  % 365;
+		return difference;
+	}
 
 
 	@Override

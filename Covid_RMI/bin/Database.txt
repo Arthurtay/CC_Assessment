@@ -2,8 +2,6 @@ S12345678A,Arthur,Tampines,01/01/2021 13:25:17
 S12345678A,Arthur Tay,Tampines,02/06/2021 17:05:59
 S12345678A,Arthur Tay,Tampines,02/06/2021 17:11:31
 S12345678A,Arthur Tay,Tampines,02/06/2021 17:23:42
-
-S9712408J,Haadee,Tampines Mall,03/06/2021 15:56:10
 S22W,Haadee,Tampines Mall,03/06/2021 16:10:52
 S22W,Haadee,Tampines Mall,03/06/2021 16:27:02
 S22W,Haadee,Tampines Mall,03/06/2021 17:07:31

@@ -4,13 +4,11 @@ public class SuspectedCovid implements Serializable{
 	String nric;
 	String location;
 	String dateSuspected;
-	Boolean status;
 	
-	public SuspectedCovid(String nric, String location, String dateSuspected, Boolean status) {
+	public SuspectedCovid(String nric, String location, String dateSuspected) {
 		this.nric = nric;
 		this.location = location;
 		this.dateSuspected = dateSuspected;
-		this.status = status;
 	}
 	
 	public void setNric(String newNric) {
@@ -25,10 +23,6 @@ public class SuspectedCovid implements Serializable{
 		this.dateSuspected = newDateSuspected;
 	}
 	
-	public void setStatus(Boolean newStatus) {
-		this.status = newStatus;
-	}
-	
 	public String getNric() {
 		return this.nric;
 	}
@@ -41,8 +35,5 @@ public class SuspectedCovid implements Serializable{
 		return this.dateSuspected;
 	}
 	
-	public Boolean getStatus() {
-		return this.status;
-	}
 	
 }

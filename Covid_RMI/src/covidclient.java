@@ -22,20 +22,27 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 	}
 
 	@Override
-	public void NotifyCovid(ArrayList<InfectedLocation> covidLocation) throws RemoteException {
+	public void NotifyCovid(ArrayList<SuspectedCovid> suspectC, String nric) throws RemoteException {
 		
-		if(covidLocation.isEmpty()) 
-		{
-			System.out.println("There is no suspected exposure of covid");			
-		}
-		else {
-			
-			System.out.println("You are suspected of covid, please monitor your health for the next 14 days");
-			System.out.println("======Location of Exposure=====");
-			for(InfectedLocation loc : covidLocation) {
-				System.out.println("Location : " + loc.location + "Time" + loc.dateInfection);	
+//		if(covidLocation.isEmpty()) 
+//		{
+//			System.out.println("There is no suspected exposure of covid");			
+//		}
+//		else {
+//			
+//			System.out.println("You are suspected of covid, please monitor your health for the next 14 days");
+//			System.out.println("======Location of Exposure=====");
+//			for(InfectedLocation loc : covidLocation) {
+//				System.out.println("Location : " + loc.location + "Time" + loc.dateInfection);	
+//			}
+//			
+//		}
+		for (SuspectedCovid sc : suspectC) {
+			System.out.println(sc);
+			if(sc.getNric().contains(nric)) {
+				System.out.println("You are suspected of covid.");
+				System.out.println("\n"+ sc);
 			}
-			
 		}
 				
 	}
@@ -227,6 +234,8 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 		 
 		 
 	 }
+
+	
 
 
 	 
