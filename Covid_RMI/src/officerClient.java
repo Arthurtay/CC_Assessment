@@ -76,10 +76,7 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 		System.out.println("Declare Location at risk now? (y/n)");
 		String dateState = sc.nextLine();
 		
-		// test String for location Input
-		String testLocation = "Tampines";
-		
-		
+
 		
 		// get date time
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
@@ -119,9 +116,6 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 				
 			}
 
-		o.getLatestLocationDate(testLocation);
-		
-		
 		
 	}
 	

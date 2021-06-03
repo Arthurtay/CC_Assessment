@@ -14,9 +14,11 @@ import java.util.concurrent.locks.ReentrantLock;
 public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements covid, officer {
 
 	
-	private ArrayList<Person> Database = new ArrayList<Person>() ;
+	public ArrayList<Person> Database = new ArrayList<Person>() ;
 	
-	private ArrayList<InfectedLocation> LocationLog = new ArrayList<InfectedLocation>();
+	public ArrayList<InfectedLocation> LocationLog = new ArrayList<InfectedLocation>();
+	
+	public ArrayList<SuspectedCovid> suspectC = new ArrayList<SuspectedCovid>();
 	
 	private ReentrantLock lock = new ReentrantLock();
 	
@@ -283,28 +285,22 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 
 	@Override
 	public void checkCovid(CovidRMIClientInf client, String nric) throws RemoteException {
-		
 		try {
-
 			ArrayList<InfectedLocation> exposure = new ArrayList<InfectedLocation>();
-		
 			for(InfectedLocation log : LocationLog ) {
 				Date covidDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(log.dateInfection); 
-			
+				System.out.println(log.getLocation() + " "+ log.getDateInfection() +" "+ log.getDatePost());
 				for (Person person : Database) {
 					Date visitDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(person.time); 
 				    
 					if(log.location.equals(person.location) && covidDate.before(visitDate) &&  nric.equals(person.nric)) 
 					{
-	
 						exposure.add(log);
-						
 					}
-							
 				}
-			
-				
 			}
+			
+			
 
 			//Set<InfectedLocation> uniqueLocation =  exposure;
 			client.NotifyCovid(exposure);	

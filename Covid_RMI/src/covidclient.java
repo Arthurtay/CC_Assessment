@@ -26,7 +26,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 		
 		if(covidLocation.isEmpty()) 
 		{
-			System.out.println("There is no supsected exposure of covid");			
+			System.out.println("There is no suspected exposure of covid");			
 		}
 		else {
 			
@@ -85,7 +85,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 		 System.out.println("Enter your NRIC");
 		 String nric = sc.nextLine();
 	     
-		 System.out.println("Welcome to the Check In client" + name + " " + nric + "!"  ); 
+		 System.out.println("Welcome to the Check In client " + name + " " + nric + "!"  ); 
 
 		 service.checkCovid(client, nric);
 		 
