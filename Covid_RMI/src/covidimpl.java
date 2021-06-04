@@ -48,13 +48,15 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
   		 
   			  Database.add(ppl); 
   		 
-  			  System.out.println("--------------------------------" );
+  			  
   		
   		  }
   	  }
   	  catch(Exception e) {
   		  System.out.println(e);
   	  }
+  	System.out.println("--------------------------------" );
+  	System.out.println("\nLocations that are infected are as follows: \n" );
   	  
   	  try {
   		  BufferedReader br = new BufferedReader(new FileReader(fileLocation));
@@ -63,22 +65,18 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
  		  {
  		 //For each line being read. split the text by delimiter comma.
  			  String[] tokens = st.split(","); 
- 			  System.out.println(tokens[0]);
- 			  System.out.println(tokens[1]);
- 			  System.out.println(tokens[2]);
+ 			  System.out.println(tokens[0] +" is infected from, "+ tokens[1] + " till "+ tokens[2] +"\n");
  			  InfectedLocation InfectedLog = new InfectedLocation(tokens[0],tokens[1],tokens[2]); 
  		 
  			  LocationLog.add(InfectedLog); 
  		 
- 			  System.out.println("--------------------------------" );
- 		
  		  }
   		  
   		  
   	  }catch(Exception e) {
   		  System.out.println(e);
   	  }
-        
+  	System.out.println("--------------------------------" );
         //Implement and load data from text file
     }
     
@@ -88,8 +86,6 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	public void checkIn(CovidRMIClientInf client,Person p) throws RemoteException {
 		// TODO Auto-generated method stub
 	 // Person test = (Person) p; 
-		
-		      
 			 Thread checkInThread = new Thread(new Runnable() {
 
 					@Override
@@ -232,10 +228,6 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 			  
 	  		  InfectedLocation InfectedLog = new InfectedLocation(IL.location, IL.dateInfection, IL.datePostInfection); 
 	  		  LocationLog.add(InfectedLog); 
-	  		 
-	  		  
-			  
-			  
 		 }catch(Exception e) {
 			  System.out.println(e);
 			 
@@ -303,7 +295,6 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 								System.out.print("Damn safe");
 							}
 							else {
-								result = (p.getNric()+ " is suspected of covid at "+ Log.getLocation() + " on " + p.getTime());
 								System.out.println(result);
 								SuspectedCovid sc = new SuspectedCovid(p.getNric(), Log.getLocation(), p.getTime());
 								suspectC.add(sc);
