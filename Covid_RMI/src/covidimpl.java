@@ -306,6 +306,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 								result = (p.getNric()+ " is suspected of covid at "+ Log.getLocation() + " on " + p.getTime());
 								System.out.println(result);
 								SuspectedCovid sc = new SuspectedCovid(p.getNric(), Log.getLocation(), p.getTime());
+								suspectC.add(sc);
 								client.NotifyCovid(suspectC, nric);
 							}
 						}

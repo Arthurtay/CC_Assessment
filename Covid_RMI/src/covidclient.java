@@ -38,10 +38,9 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 //			
 //		}
 		for (SuspectedCovid sc : suspectC) {
-			System.out.println(sc);
 			if(sc.getNric().contains(nric)) {
 				System.out.println("You are suspected of covid.");
-				System.out.println("\n"+ sc);
+				System.out.println("\n"+ sc.getNric() + "\n" + sc.getLocation() + "\n" + sc.getDateSuspected());
 			}
 		}
 				
