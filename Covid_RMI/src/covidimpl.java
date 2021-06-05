@@ -35,21 +35,22 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
   	  try {
   		  BufferedReader br = new BufferedReader(new FileReader(file));
   		  String st;
+  		  System.out.println("\nActivity Record\n");
+  		  System.out.println("--------------------------------");
   	  
   	  //continuous read file 
   		  while ((st = br.readLine()) != null) 
   		  {
   		 //For each line being read. split the text by delimiter comma.
   			  String[] tokens = st.split(","); 
-  			  System.out.println(tokens[0]);
-  			  System.out.println(tokens[1]);
-  			  System.out.println(tokens[2]);
+  			  System.out.println("NRIC: "+tokens[0]);
+  			  System.out.println("Name: "+tokens[1]);
+  			  System.out.println("Location: "+tokens[2]);
+  			  System.out.println("Date & Time of Check In/Out: " + tokens[3]);
+  			  System.out.println("\n");
   			  Person ppl = new Person(tokens[0],tokens[1],tokens[2],tokens[3]); 
   		 
   			  Database.add(ppl); 
-  		 
-  			  
-  		
   		  }
   	  }
   	  catch(Exception e) {
