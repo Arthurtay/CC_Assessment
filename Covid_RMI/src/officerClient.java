@@ -42,28 +42,7 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 	    }
 		
 		
-		officer o = (officer) Naming.lookup("rmi://" + reg_host + ":" + reg_port + "/OfficerLocationService");
-		
-		
-		
-		
-		// check difference in date if lesser than 14 days
-		// datePost : dayAlert + 14 days
-//		try {
-//			Date firstDate = dateFormat.parse(dateAlert);
-//			Date secondDate = dateFormat.parse(datePost);
-//			long diff_time = secondDate.getTime() - firstDate.getTime();
-//			long diff_day = (diff_time
-//	                   / (1000 * 60 * 60 * 24))
-//	                  % 365;
-//						System.out.println(diff_day);
-//		
-//			
-//		} catch (ParseException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-		
+		officer o = (officer) Naming.lookup("rmi://" + reg_host + ":" + reg_port + "/CovidCheckInService");
 		
 		// request for officer input
 		// columns include: location, date time of covid, end time of covid (14 days)

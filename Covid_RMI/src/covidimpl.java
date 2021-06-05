@@ -26,8 +26,6 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	
     public covidimpl() throws java.rmi.RemoteException {
         super();
-       
-    
   	  File file = new File("Database.txt");
   	  
   	  File fileLocation = new File("covid_location.txt");
@@ -52,16 +50,9 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
   		 
   			  Database.add(ppl); 
   		  }
-  	  }
-  	  catch(Exception e) {
-  		  System.out.println(e);
-  	  }
-  	System.out.println("--------------------------------" );
-  	System.out.println("\nLocations that are infected are as follows: \n" );
-  	  
-  	  try {
-  		  BufferedReader br = new BufferedReader(new FileReader(fileLocation));
-  		  String st;
+  		System.out.println("--------------------------------" );
+  	  	System.out.println("\nLocations that are infected are as follows: \n" );
+  		  br = new BufferedReader(new FileReader(fileLocation));
   		 while ((st = br.readLine()) != null) 
  		  {
  		 //For each line being read. split the text by delimiter comma.
@@ -72,13 +63,11 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
  			  LocationLog.add(InfectedLog); 
  		 
  		  }
-  		  
-  		  
-  	  }catch(Exception e) {
+  		System.out.println("--------------------------------" );
+  	  }
+  	  catch(Exception e) {
   		  System.out.println(e);
   	  }
-  	System.out.println("--------------------------------" );
-        //Implement and load data from text file
     }
     
 
