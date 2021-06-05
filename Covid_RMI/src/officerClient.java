@@ -74,9 +74,15 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 				
 				System.out.println(dateAlert);
 				o.insertLog(locationCovid, dateAlert, datePost);
-				o.DisplayInfectedLocation();
-					
 				
+				System.out.println("--------------------------------\n");
+				System.out.println("Updated Infected Location");
+				System.out.println("--------------------------------");
+				ArrayList<InfectedLocation> newIL = o.IL();
+				for (InfectedLocation i: newIL) {
+					System.out.println(i.getLocation() +" is infected from, "+ i.getDateInfection() + " till "+ i.getDatePost() +"\n");
+				}
+				System.out.println("--------------------------------\n");
 			}
 			else if (dateState.toLowerCase().equals("n")) {
 				
@@ -93,7 +99,14 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 					String newDatePost = dateFormat.format(d.getTime());
 					
 					o.insertLog(locationCovid, printedDateAlert, newDatePost);
-					o.DisplayInfectedLocation();
+					System.out.println("--------------------------------\n");
+					System.out.println("Updated Infected Location");
+					System.out.println("--------------------------------");
+					ArrayList<InfectedLocation> newIL = o.IL();
+					for (InfectedLocation i: newIL) {
+						System.out.println(i.getLocation() +" is infected from, "+ i.getDateInfection() + " till "+ i.getDatePost() +"\n");
+					}
+					System.out.println("--------------------------------\n");
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

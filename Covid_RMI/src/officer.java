@@ -15,6 +15,8 @@ public interface officer extends java.rmi.Remote {
 	public long time_diff(Date firstTime, Date secondTime) throws java.rmi.RemoteException;
 	
 	public void DisplayInfectedLocation() throws java.rmi.RemoteException;
+	
+	public ArrayList<InfectedLocation> IL() throws java.rmi.RemoteException;
 
 	
 }

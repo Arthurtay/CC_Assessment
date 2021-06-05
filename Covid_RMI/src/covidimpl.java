@@ -27,7 +27,6 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
     public covidimpl() throws java.rmi.RemoteException {
         super();
   	  File file = new File("Database.txt");
-  	  
   	  File fileLocation = new File("covid_location.txt");
   	  
   	  try {
@@ -342,7 +341,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 			InfectedLocation IL = new InfectedLocation(locationCovid, dateAlert, datePost);
 			
 			storeTextToArray(IL);
-			result = "Update Record \n"+ "Location: " + locationCovid + " is at risk from " + dateAlert + " to "+ datePost;
+			result = "\n"+ "Location: " + locationCovid + " is at risk from " + dateAlert + " to "+ datePost;
 			System.out.println(result +"\n"+ "- Declared by MOH officer.");
 			System.out.println("--------------------------------");
 		} catch (IOException e) {
@@ -365,6 +364,37 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 		}
 		System.out.println("--------------------------------\n");
 	}
+
+
+
+
+	@Override
+	public ArrayList<InfectedLocation> IL() throws RemoteException {
+		ArrayList<InfectedLocation> IL = new ArrayList<InfectedLocation>();
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("covid_location.txt"));
+			
+			 String st = null;
+			 while ((st = br.readLine()) != null) 
+	 		  {
+	 		 //For each line being read. split the text by delimiter comma.
+	 			  String[] tokens = st.split(","); 
+	 			  System.out.println(tokens[0] +" is infected from, "+ tokens[1] + " till "+ tokens[2] +"\n");
+	 			  InfectedLocation InfectedLog = new InfectedLocation(tokens[0],tokens[1],tokens[2]); 
+	 		 
+	 			 IL.add(InfectedLog);
+	 		 
+	 		  }
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		return(IL);
+	}
+	
+	
 
 }
 
