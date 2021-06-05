@@ -13,6 +13,8 @@ public interface officer extends java.rmi.Remote {
 	public String getLatestLocationDate(String locationInput) throws java.rmi.RemoteException;
 	
 	public long time_diff(Date firstTime, Date secondTime) throws java.rmi.RemoteException;
+	
+	public void DisplayInfectedLocation() throws java.rmi.RemoteException;
 
 	
 }

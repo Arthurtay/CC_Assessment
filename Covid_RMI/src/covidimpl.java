@@ -343,11 +343,27 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 			
 			storeTextToArray(IL);
 			result = "Update Record \n"+ "Location: " + locationCovid + " is at risk from " + dateAlert + " to "+ datePost;
+			System.out.println(result +"\n"+ "- Declared by MOH officer.");
+			System.out.println("--------------------------------");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+
+
+
+	@Override
+	public void DisplayInfectedLocation() throws RemoteException {
+		System.out.println("--------------------------------\n");
+		System.out.println("Updated Infected Location");
+		System.out.println("--------------------------------");
+		for (InfectedLocation i: LocationLog) {
+			System.out.println(i.getLocation() +" is infected from, "+ i.getDateInfection() + " till "+ i.getDatePost() +"\n");
+		}
+		System.out.println("--------------------------------\n");
 	}
 
 }

@@ -55,6 +55,8 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 		System.out.println("Declare Location at risk now? (y/n)");
 		String dateState = sc.nextLine();
 		
+		System.out.println("\n");
+		
 
 		
 		// get date time
@@ -72,6 +74,9 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 				
 				System.out.println(dateAlert);
 				o.insertLog(locationCovid, dateAlert, datePost);
+				o.DisplayInfectedLocation();
+					
+				
 			}
 			else if (dateState.toLowerCase().equals("n")) {
 				
@@ -88,6 +93,7 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 					String newDatePost = dateFormat.format(d.getTime());
 					
 					o.insertLog(locationCovid, printedDateAlert, newDatePost);
+					o.DisplayInfectedLocation();
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
