@@ -6,7 +6,7 @@ import java.util.Date;
 
 public interface officer extends java.rmi.Remote {
 	
-	public String insertLog(String locationCovid, String dateAlert, String datePost) throws java.rmi.RemoteException;
+	public void insertLog(officerClient mohClient,String locationCovid, String dateAlert, String datePost) throws java.rmi.RemoteException;
 	
 	public void storeTextToArray(InfectedLocation IL) throws java.rmi.RemoteException, IOException;
 	

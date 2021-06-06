@@ -10,8 +10,8 @@ public class covidserver {
        	covid c = new covidimpl();
        	Naming.rebind("rmi://localhost:" + port + "/CovidCheckInService", c);
        	
-//       	officer o = new covidimpl();
-//       	Naming.rebind("rmi://localhost:" + port + "/OfficerLocationService", o);
+       	officer o = new covidimpl();
+       	Naming.rebind("rmi://localhost:" + port + "/OfficerLocationService", o);
        	} 
      catch (Exception e) {
        System.out.println("Server Error: " + e);

@@ -18,15 +18,40 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-public class officerClient  extends java.rmi.server.UnicastRemoteObject {
+public class officerClient  extends java.rmi.server.UnicastRemoteObject implements OfficerRMIClientInf {
 
+	
+	
+	public void confirmation(String Message ) throws java.rmi.RemoteException{
+		
+		System.out.println(Message);
+		
+	}
+	
+	
+	public void retrieveHistory(ArrayList<InfectedLocation> newIL) throws java.rmi.RemoteException{
+		
+		
+		System.out.println("--------------------------------\n");
+		System.out.println("Updated Infected Location");
+		System.out.println("--------------------------------");
+		for (InfectedLocation i: newIL) {
+			System.out.println(i.getLocation() +" is infected from, "+ i.getDateInfection() + " till "+ i.getDatePost() +"\n");
+		}
+		System.out.println("--------------------------------\n");
+		
+	}
+	
+	
+	
+	
 	public officerClient() throws RemoteException {
 		
 	}
 	
 	
 	
-	public static void main(String[] args) throws IOException, NotBoundException {
+	public static void main(String[] args) throws IOException, NotBoundException, InterruptedException {
 		
 		String reg_host = "localhost";
 		int reg_port = 1099;
@@ -41,6 +66,7 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 	    	reg_port = Integer.parseInt(args[1]);
 	    }
 		
+		officerClient mohClient = new officerClient();
 		
 		officer o = (officer) Naming.lookup("rmi://" + reg_host + ":" + reg_port + "/CovidCheckInService");
 		
@@ -52,7 +78,7 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 		System.out.println("Enter Location of Covid Case");
 		String locationCovid = sc.nextLine();
 				 
-		System.out.println("Declare Location at risk now? (y/n)");
+		System.out.println("Declare Location at risk with the current time? (y/n)");
 		String dateState = sc.nextLine();
 		
 		System.out.println("\n");
@@ -73,16 +99,8 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 		if (dateState.toLowerCase().equals("y")){
 				
 				System.out.println(dateAlert);
-				o.insertLog(locationCovid, dateAlert, datePost);
+				o.insertLog(mohClient,locationCovid, dateAlert, datePost);
 				
-				System.out.println("--------------------------------\n");
-				System.out.println("Updated Infected Location");
-				System.out.println("--------------------------------");
-				ArrayList<InfectedLocation> newIL = o.IL();
-				for (InfectedLocation i: newIL) {
-					System.out.println(i.getLocation() +" is infected from, "+ i.getDateInfection() + " till "+ i.getDatePost() +"\n");
-				}
-				System.out.println("--------------------------------\n");
 			}
 			else if (dateState.toLowerCase().equals("n")) {
 				
@@ -98,15 +116,8 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 					d.add(Calendar.DAY_OF_MONTH, 14);
 					String newDatePost = dateFormat.format(d.getTime());
 					
-					o.insertLog(locationCovid, printedDateAlert, newDatePost);
-					System.out.println("--------------------------------\n");
-					System.out.println("Updated Infected Location");
-					System.out.println("--------------------------------");
-					ArrayList<InfectedLocation> newIL = o.IL();
-					for (InfectedLocation i: newIL) {
-						System.out.println(i.getLocation() +" is infected from, "+ i.getDateInfection() + " till "+ i.getDatePost() +"\n");
-					}
-					System.out.println("--------------------------------\n");
+					o.insertLog(mohClient,locationCovid, printedDateAlert, newDatePost);
+
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -1,4 +1,9 @@
 /SuspectedCovid.class
 /covidimpl$1.class
 /covidimpl$2.class
+<<<<<<< Updated upstream
 /TestRMIConnection.class
+=======
+/covidimpl$3.class
+/OfficerRMIClientInf.class
+>>>>>>> Stashed changes
