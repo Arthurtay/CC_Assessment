@@ -4,9 +4,6 @@ import java.util.ArrayList;
 public interface covid extends java.rmi.Remote {	
 
 
-// add takes two long values, adds them together and returns the resulting
-// long value
-
 public void checkIn(CovidRMIClientInf client, Person p) throws java.rmi.RemoteException;
 
 

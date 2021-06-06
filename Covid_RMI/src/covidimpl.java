@@ -29,6 +29,8 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 
     public covidimpl() throws java.rmi.RemoteException {
         super();
+       
+      System.out.println("\n=============== Welcome to the Server Terminal ===============");
   	  File file = new File("Database.txt");
   	  File fileLocation = new File("covid_location.txt");
   	  
@@ -298,10 +300,6 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
     // 3.Moh Officer Client Function implemention  in Server START
     //================================================================================
 	
-	
-
-
-
 	@Override
 	public String getLatestLocationDate(String locationInput) throws RemoteException {
 		
@@ -410,9 +408,6 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 
 	@Override
 	public void storeTextToArray(InfectedLocation IL) throws RemoteException, IOException {
-	
-		     
-			   
 			  System.out.println("Updated Infected Location Log");
 			   
 	  		  InfectedLocation InfectedLog = new InfectedLocation(IL.location, IL.dateInfection, IL.datePostInfection); 
@@ -435,35 +430,6 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 		System.out.println("--------------------------------\n");
 	}
 
-
-
-/**
-	@Override
-	public ArrayList<InfectedLocation> IL() throws RemoteException {
-		ArrayList<InfectedLocation> IL = new ArrayList<InfectedLocation>();
-		try {
-			BufferedReader br = new BufferedReader(new FileReader("covid_location.txt"));
-			
-			 String st = null;
-			 while ((st = br.readLine()) != null) 
-	 		  {
-	 		 //For each line being read. split the text by delimiter comma.
-	 			  String[] tokens = st.split(","); 
-	 			  System.out.println(tokens[0] +" is infected from, "+ tokens[1] + " till "+ tokens[2] +"\n");
-	 			  InfectedLocation InfectedLog = new InfectedLocation(tokens[0],tokens[1],tokens[2]); 
-	 		 
-	 			 IL.add(InfectedLog);
-	 		 
-	 		  }
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 
-		return(IL);
-	}
-*/
 	
     //================================================================================
     // 3.Moh Officer Client Function implemention  in Server END
