@@ -1,3 +1,6 @@
 S22W,Haadee,Bugis,05/06/2021 13:33:58
 S22W,Haadee,Tampines Mall,06/06/2021 13:59:18
 Arthur,S12345678A,Tampines Mall,06/06/2021 15:54:30
+Arthur Tay,S12345678A,Tampines Mall,06/06/2021 20:45:12
+Arthur Tay,S12345678Z,Tampines Mall,06/06/2021 20:47:22
+Arthur Tay,S12345678A,Tampines Mall,06/06/2021 20:49:04

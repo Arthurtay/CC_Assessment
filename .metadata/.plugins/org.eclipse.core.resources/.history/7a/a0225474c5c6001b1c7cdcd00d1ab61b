@@ -152,7 +152,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 							  Date currentDate = dateFormat.parse(p.time);
 					    	  //Check if there is existing check in record for the current day
 					    	  if( record.location.equals(p.location) && record.nric.equals(p.nric) && record.location.equals(p.location)  ) {
-					    		  checkout = true;
+					    		  checkout = true
 					    		  
 					    	  }  
 					    	  
