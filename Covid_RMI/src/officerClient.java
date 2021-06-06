@@ -28,10 +28,11 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject implemen
 		
 	}
 	
-    // The o.IL() function has become a call back for this to print out the latest location after inserting	
+	
+    // The o.IL() function has become a call back for this to print out the latest location after inserting
+	// Once officer updates the server on a new infected location,  
+	
 	public void retrieveLatestLocation(ArrayList<InfectedLocation> newIL) throws java.rmi.RemoteException{
-		
-		
 		System.out.println("--------------------------------\n");
 		System.out.println("Updated Infected Location");
 		System.out.println("--------------------------------");
@@ -42,14 +43,9 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject implemen
 		
 	}
 	
-	
-	
-	
 	public officerClient() throws RemoteException {
 		
 	}
-	
-	
 	
 	public static void main(String[] args) throws IOException, NotBoundException, InterruptedException {
 		
@@ -70,8 +66,12 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject implemen
 		
 		officer o = (officer) Naming.lookup("rmi://" + reg_host + ":" + reg_port + "/CovidCheckInService");
 		
-		// request for officer input
-		// columns include: location, date time of covid, end time of covid (14 days)
+		// Request for officer input
+		/*Inputs include:
+		 * 1. Infected location
+		 * 2. Date state: Declare location today(NOW) or other day
+		 * 
+		 * */
 		Scanner sc=new Scanner(System.in);
 		System.out.println("-----------------Welcome to the MOH Officer Client-----------------\n");
 		 
@@ -83,14 +83,22 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject implemen
 		
 		System.out.println("\n");
 		
+		/*
+		 * dateAlert = current datetime
+		 * datePost = (dateAlert + 14 days) to indicate timeframe of infected location and set a date for when location is covid free
+		 * ===============================
+		 * printedDateAlert = officer input own datetime
+		 * newDatePost = (printedDateAlert + 14 days)
+		 * */
 
 		
-		// get date time
+		// Set dateFormat to hold a default datetime format to be used throughout
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
 	    Date date = new Date();  
 	    String dateAlert = dateFormat.format(date);
-		// date after 14 days
-		// instantiate calendar
+	    
+		// If officer typed yes to declaring location NOW, then current datetime will be taken
+		// instantiate calendar to begin process of adding in 14 days to get datetime of when location will be Covid Free
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date());
 		c.add(Calendar.DAY_OF_MONTH, 14);
@@ -99,6 +107,8 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject implemen
 		if (dateState.toLowerCase().equals("y")){
 				
 				System.out.println(dateAlert);
+				
+				// Invoke remote method insertLog to place inputs into database("covid_locations.txt") directly
 				o.insertLog(mohClient,locationCovid, dateAlert, datePost);
 				
 			}
