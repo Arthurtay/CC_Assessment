@@ -197,12 +197,6 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 
 
 
-	@Override
-	public void multipleCheckOut(Person p) throws RemoteException {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 
 
@@ -297,19 +291,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 				}
 			}
 			
-//			ArrayList<InfectedLocation> exposure = new ArrayList<InfectedLocation>();
-//			for(InfectedLocation log : LocationLog ) {
-//				Date covidDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(log.getDateInfection()); 
-//				for (Person person : Database) {
-//					Date visitDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(person.getTime()); 
-//					if(log.getLocation().equals(person.getLocation()) && covidDate.before(visitDate) &&  nric.equals(person.getNric())) 
-//					{
-//						exposure.add(log);
-//					}
-//				}
-//			}
-			//Set<InfectedLocation> uniqueLocation =  exposure;
-//			client.NotifyCovid(exposure);	
+
 		}
 		catch(Exception e) {
 			System.out.println(e);

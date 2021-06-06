@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -14,7 +15,9 @@ import java.util.*;
 
 public class covidclient  extends java.rmi.server.UnicastRemoteObject implements CovidRMIClientInf{
 	
-	
+	static SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");	 
+	static Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
+	 
 	@Override
 	public void confirmation(String Message) throws RemoteException {
 		// TODO Auto-generated method stub
@@ -24,19 +27,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 	@Override
 	public void NotifyCovid(ArrayList<SuspectedCovid> suspectC, String nric) throws RemoteException {
 		
-//		if(covidLocation.isEmpty()) 
-//		{
-//			System.out.println("There is no suspected exposure of covid");			
-//		}
-//		else {
-//			
-//			System.out.println("You are suspected of covid, please monitor your health for the next 14 days");
-//			System.out.println("======Location of Exposure=====");
-//			for(InfectedLocation loc : covidLocation) {
-//				System.out.println("Location : " + loc.location + "Time" + loc.dateInfection);	
-//			}
-//			
-//		}
+
 		System.out.println("--------------------------");
 		System.out.println("|          ALERT         |");
 		System.out.println("--------------------------");
@@ -79,8 +70,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 		 
 		 
 		 
-	  SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");	 
-	  Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
+
 	  
 	  try {
 		covidclient client = new covidclient();
@@ -100,31 +90,11 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 
 		 service.checkCovid(client, nric);
 		 
-		 /*
-		 //Periodically check for covid status if there is suspected covidcases  
-		 Thread checkcovid_thread = new Thread(new Runnable() {
 
-				@Override
-				public void run() {
-					Random rg = new Random();
-					int timer = rg.nextInt(10000);  				
-					try {
-						
-						while(true) {
-					  	Thread.sleep(timer);
-						service.checkCovid(client, nric);
-						}
-					} catch (java.rmi.RemoteException e) {
-						e.printStackTrace();
-					} catch(InterruptedException ee) {}
-				}    
-				});
-		
-		 checkcovid_thread.start();		
-		 */
-	     
 	     while(true) {
-		 
+			  SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");	 
+			  Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
+			 
 	     System.out.println("\nEnter Number for Selection");
 		 System.out.println("1.Individual Check In");
 		 System.out.println("2.Group Check In");
@@ -132,8 +102,24 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 		 int option = Integer.parseInt(sc.nextLine());
 		 
 		 
+		 
+		 	switch(option) {
+		 		case 1:
+		 			 ClientCheckIn(sc,service,client,name,nric);
+					 break;
+		 		case 2:
+		 			ClientMultipleCheckIn(sc,service,client,name,nric);
+		 			break;
+		 		case 3:
+		 			ClientCheckOut(sc,service,client,name,nric);
+		 			break;
+		 		default:
+		 			System.out.println("Invalid option,please Key in a valid option");
+		 
+		 
+		 	}
 
-	    
+	     /*
 		 if(option == 1) {
 			 	
 			 System.out.println("\n====Invididual Check In Selected====");
@@ -149,7 +135,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 			 service.checkIn(client,p);
 			 
 		 }
-		 else {
+		 else if(option == 2) {
 			 
 			 System.out.println("\n====Multiple Check In Selected====");
 			 ArrayList<Person> listofPeople = new ArrayList<Person>() ;
@@ -190,14 +176,14 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 			 	
 		 }
 		 
-		 service.checkCovid(client, nric);
+		// service.checkCovid(client, nric);
 		 
 		 
 		 
-		
+		*/
 	   }//End of While Loop
-		  
-	  }catch(Exception e) {
+	   	  
+	  }catch(NotBoundException e) {
 		  System.out.println(e);
 		  
 	  }
@@ -206,37 +192,92 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 
 		 
 		 
-	//	 insert(name,nric,location,time);
-		 
-		
-	  /*
-	  File file = new File("D:\\javaworkspace\\Covid_RMI\\src\\rmi\\Database.txt");
-	  
-	  BufferedReader br = new BufferedReader(new FileReader(file));
-	  String st;
-	  
-	  //continuous read file 
-	  while ((st = br.readLine()) != null) 
-	  {
-		 //For each line being read. split the text by delimiter comma.
-		 String[] tokens = st.split(","); 
-		 System.out.println(tokens[0]);
-		 System.out.println(tokens[1]);
-		 System.out.println(tokens[2]);
-		// Person a = new person 
-		 
-		 System.out.println("This is the end of 1 line" );
-		
-	  }
-	  */
+
 	}
 	 
-	 public static void MultipleCheckIn() {
+	 
+	 public static void ClientCheckIn(Scanner sc,  covid service , covidclient client ,String nric, String name ) throws RemoteException{
+		 
+		//  SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");	 
+		//  Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
 		 
 		 
+		 System.out.println("\n====Invididual Check In Selected====");
+		  
+		 System.out.println("Enter your Location");
+		 String location =  sc.nextLine();
+		 
+		 String time = ft.format(timestamp);
+		 System.out.println(time);
+		 
+		 Person p = new Person(nric,name,location,time); 
+		 service.checkIn(client,p);
+	 }
+	 
+	 
+	 public static void ClientCheckOut(Scanner sc,  covid service , covidclient client ,String nric, String name ) throws RemoteException{
+		 
+		//  SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");	 
+		//  Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
+		 
+		 
+		 System.out.println("\n====Invididual Check In Selected====");
+		  
+		 System.out.println("Enter your Location");
+		 String location =  sc.nextLine();
+		 
+		 String time = ft.format(timestamp);
+		 System.out.println(time);
+		 
+		 Person p = new Person(nric,name,location,time); 
+		 service.checkOut(client, p);
+		 
+	 }
+	 
+	 
+	 
+	 public static void ClientMultipleCheckIn(Scanner sc,  covid service , covidclient client ,String nric, String name ) throws RemoteException{
+		 
+		  SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");	 
+		  Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
+		 
+		 System.out.println("\n====Multiple Check In Selected====");
+		 ArrayList<Person> listofPeople = new ArrayList<Person>() ;
+		 String state = "y" ;
 
+	
+		 System.out.println("Enter your Location");
+		 String location =  sc.nextLine();
 		 
+		 String time = ft.format(timestamp);
+		 System.out.println(time);
 		 
+		 //Include Indiviual check In 
+		 Person p = new Person(nric,name,location,time);
+		 listofPeople.add(p);
+		 
+		 //While continues to loop and read other checkin members data
+		 while(state.equals("y"))
+		 {
+			 
+			 System.out.println("Enter Family/Friend Name");
+			 String extra_name = sc.nextLine();
+			
+			 System.out.println("Enter Family/Friend NRIC");
+			 String extra_nric = sc.nextLine();
+			  			 
+			 Person p2 = new Person(extra_nric,extra_name,location,time);
+			 
+			 listofPeople.add(p2);
+			 
+			 System.out.println("Continue group check in?(y/n)" );
+			 state = sc.nextLine();
+			 
+		 }; // end of while loop
+		 
+		 //Invoke remote method 
+		 service.multipleCheckIn(client,listofPeople);
+		 	
 	 }
 
 	

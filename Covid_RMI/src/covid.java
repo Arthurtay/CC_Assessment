@@ -16,7 +16,7 @@ public void checkOut(CovidRMIClientInf client, Person p) throws java.rmi.RemoteE
 
 public void multipleCheckIn(CovidRMIClientInf client, ArrayList<Person> p)throws java.rmi.RemoteException;
 
-public void multipleCheckOut(Person p)throws java.rmi.RemoteException;
+
 
 public void checkCovid(CovidRMIClientInf client, String nric) throws java.rmi.RemoteException;
  
