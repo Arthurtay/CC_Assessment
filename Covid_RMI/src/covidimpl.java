@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.rmi.RemoteException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
@@ -95,22 +96,20 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 								//rg.nextInt(10000);  				
 						try {							
 							
-						  	//Thread.sleep(timer);
-							  System.out.println("Getting lock please wait");
-							  client.confirmation("Getting lock please wait");
+						  	
+							  client.confirmation("Processing Check In");
 							  lock.lock();
-							  System.out.println("I got the lock");
-							  client.confirmation("I got the lock");
+							   
 							  File f  = new File("Database.txt");
 							  PrintWriter write =   new PrintWriter(new FileOutputStream(f,true));
 							  write.append(p.nric +","+ p.name +","+ p.location +","+ p.time + "\n");
 							  write.close();  
-							  System.out.println("check in sucessfully");
-							  
-					  		  Person ppl = new Person(p.nric,p.name,p.location,p.time); 
+					  		  
+							  Person ppl = new Person(p.nric,p.name,p.location,p.time); 
 					  		  Database.add(ppl); 
+					  		  
 					  		  client.confirmation("Check in Sucessfully");
-					  		 Thread.sleep(timer);
+					  		  Thread.sleep(timer);
 							
 						} catch (java.rmi.RemoteException e) {
 							e.printStackTrace();
@@ -134,25 +133,70 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	public void checkOut(CovidRMIClientInf client,Person p) throws RemoteException {
 		// TODO Auto-generated method stub
 		
-		 try {
-		      lock.lock();      
-		      File f  = new File("Database.txt");
-			  PrintWriter write =   new PrintWriter(new FileOutputStream(f,true));
-			  write.append(p.nric +","+ p.name +","+ p.location +","+ p.time + "\n");
-			  write.close();  
-			  System.out.println("check out sucessfully");
-			  
-	  		  Person ppl = new Person(p.nric,p.name,p.location,p.time); 
-	  		  Database.add(ppl); 
-	  		  
-		 	}catch(Exception e) {
-		 		System.out.println(e);
-		 
-		 	}finally {
-		 		
-		 		lock.unlock();
-		 		
-		 	}
+		
+		 Thread checkOutThread = new Thread(new Runnable() {
+			 boolean checkout = false;
+				@Override
+				public void run() {
+					Random rg = new Random();
+					int timer = 5000;
+							//rg.nextInt(10000);  				
+					try {							
+						SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+					  	//Thread.sleep(timer);
+					
+					        
+					      for(Person record: Database) {
+					    	  
+							  Date recordDate = dateFormat.parse(record.time);
+							  Date currentDate = dateFormat.parse(p.time);
+					    	  //Check if there is existing check in record for the current day
+					    	  if( record.location.equals(p.location) && record.nric.equals(p.nric) && record.location.equals(p.location)  ) {
+					    		  
+					    		  
+					    	  }  
+					    	  
+					      }
+					      if(checkout) {
+						      lock.lock();  
+						      File f  = new File("Database.txt");
+							  PrintWriter write =   new PrintWriter(new FileOutputStream(f,true));
+							  write.append(p.nric +","+ p.name +","+ p.location +","+ p.time + "\n");
+							  write.close();  
+							  System.out.println();
+					  		  Person ppl = new Person(p.nric,p.name,p.location,p.time); 
+					  		  Database.add(ppl); 
+					  		  client.confirmation("Check out sucessfully");
+					  	   	  Thread.sleep(timer);
+					      }
+					      else {
+					    	  client.confirmation("Unable to checkout,there is no existing checkin record today ");
+					      }
+	
+						
+					} catch (java.rmi.RemoteException e) {
+						e.printStackTrace();
+					} catch(InterruptedException e) {
+						e.printStackTrace();
+					}catch(FileNotFoundException e) {
+						e.printStackTrace();
+					}catch(ParseException e) {
+						e.printStackTrace();
+					}
+					finally {
+					 //only attempts to unlock if checkout was true 
+						if(checkout) {
+							lock.unlock();
+						
+						}
+					 
+					}
+					
+				}    
+				});
+		
+		 checkOutThread.start();	
+
 		
 	}
 
@@ -168,14 +212,10 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 						int timer = rg.nextInt(10000);  				
 						try {							
 							
-						  	//Thread.sleep(timer);
-						    System.out.println("Getting lock please wait");
-						    client.confirmation("Getting lock please wait");
-						     lock.lock();
-						     client.confirmation("Processing check in");
-						     System.out.println("I got the lock");
-						      File f  = new File("Database.txt");
-							  PrintWriter write =   new PrintWriter(new FileOutputStream(f,true));
+						    client.confirmation("Processing check in");
+						    lock.lock();
+						    File f  = new File("Database.txt");
+							PrintWriter write =   new PrintWriter(new FileOutputStream(f,true));
 					
 							  listofPeople.forEach((ppl) -> {
 							  write.append(ppl.nric +","+ ppl.name +","+ ppl.location +","+ ppl.time + "\n");  
@@ -193,7 +233,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 							
 						}finally {
 							lock.unlock();
-							System.out.print("Lock is free");
+				
 						}
 						
 					}    
@@ -206,6 +246,8 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	
 	@Override
 	public void checkCovid(CovidRMIClientInf client, String nric) throws RemoteException {
+		
+		
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			// can return result as different string also
@@ -239,7 +281,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 			
 
 		}
-		catch(Exception e) {
+		catch(ParseException e) {
 			System.out.println(e);
 		}
 			
@@ -310,28 +352,12 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 
 
 	
+
 	@Override
-	public void storeTextToArray(InfectedLocation IL) throws RemoteException, IOException {
-		try {
-		      mohLock.lock();
-
-			   
-			  System.out.println("Updated Infected Location Log");
-			  
-	  		  InfectedLocation InfectedLog = new InfectedLocation(IL.location, IL.dateInfection, IL.datePostInfection); 
-	  		  LocationLog.add(InfectedLog); 
-		 } finally {
-			 mohLock.unlock();
-		 }
-	}
-
-
-	
-	@Override
-	public void insertLog(officerClient mohClient,String locationCovid, String dateAlert, String datePost) throws RemoteException {
+	public void insertLog(OfficerRMIClientInf mohClient,String locationCovid, String dateAlert, String datePost) throws RemoteException {
 		// TODO Auto-generated method stub
 		
-
+		System.out.println("This is called");
 		 Thread MohThread = new Thread(new Runnable() {
 			 
 				String result = "Empty";
@@ -341,11 +367,11 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 				@Override
 				public void run() {
 					Random rg = new Random();
-					int timer = rg.nextInt(10000);  				
+				//	int timer = rg.nextInt(10000);  				
 					try {							
 						
 	
-							mohLock.lock();
+						 	mohLock.lock();
 							pw = new PrintWriter(new FileOutputStream(f,true));
 							pw.append(locationCovid +","+ dateAlert +"," +datePost +"\n");
 							
@@ -358,7 +384,8 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 							System.out.println(result +"\n"+ "- Declared by MOH officer.");
 							System.out.println("--------------------------------");
 					        mohClient.confirmation(result);
-							Thread.sleep(timer);
+					        mohClient.retrieveLatestLocation(LocationLog);
+							Thread.sleep(10);
 							
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
@@ -377,11 +404,24 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 				}    
 			});
 		
-		
+		MohThread.start();
 	
 	}
 
+	@Override
+	public void storeTextToArray(InfectedLocation IL) throws RemoteException, IOException {
+	
+		     
+			   
+			  System.out.println("Updated Infected Location Log");
+			   
+	  		  InfectedLocation InfectedLog = new InfectedLocation(IL.location, IL.dateInfection, IL.datePostInfection); 
+	  		  LocationLog.add(InfectedLog); 
+		 
+	}
 
+
+	
 
 
 	@Override
@@ -397,7 +437,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 
 
 
-
+/**
 	@Override
 	public ArrayList<InfectedLocation> IL() throws RemoteException {
 		ArrayList<InfectedLocation> IL = new ArrayList<InfectedLocation>();
@@ -423,7 +463,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 		 
 		return(IL);
 	}
-	
+*/
 	
     //================================================================================
     // 3.Moh Officer Client Function implemention  in Server END

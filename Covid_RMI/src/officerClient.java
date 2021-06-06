@@ -28,8 +28,8 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject implemen
 		
 	}
 	
-	
-	public void retrieveHistory(ArrayList<InfectedLocation> newIL) throws java.rmi.RemoteException{
+    // The o.IL() function has become a call back for this to print out the latest location after inserting	
+	public void retrieveLatestLocation(ArrayList<InfectedLocation> newIL) throws java.rmi.RemoteException{
 		
 		
 		System.out.println("--------------------------------\n");
