@@ -1,2 +1,0 @@
-10,10,singapore,2021-05-29
-arthur,s9999999,singapore,2021-05-29
