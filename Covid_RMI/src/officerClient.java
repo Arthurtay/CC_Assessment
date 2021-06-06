@@ -47,7 +47,7 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject {
 		// request for officer input
 		// columns include: location, date time of covid, end time of covid (14 days)
 		Scanner sc=new Scanner(System.in);
-		System.out.println("Welcome to the MOH Officer Client");
+		System.out.println("-----------------Welcome to the MOH Officer Client-----------------\n");
 		 
 		System.out.println("Enter Location of Covid Case");
 		String locationCovid = sc.nextLine();

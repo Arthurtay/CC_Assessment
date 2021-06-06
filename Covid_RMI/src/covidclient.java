@@ -96,7 +96,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 		 System.out.println("Enter your NRIC");
 		 String nric = sc.nextLine();
 	     
-		 System.out.println("Welcome to the Check In client " + name + " " + nric + "!"  ); 
+		 System.out.println("\nWelcome to the Check In client " + name + " " + nric + "!"  ); 
 
 		 service.checkCovid(client, nric);
 		 
@@ -125,7 +125,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 	     
 	     while(true) {
 		 
-	     System.out.println("Enter Number for Selection");
+	     System.out.println("\nEnter Number for Selection");
 		 System.out.println("1.Individual Check In");
 		 System.out.println("2.Group Check In");
 		 System.out.println("3.Checkout");
@@ -136,7 +136,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 	    
 		 if(option == 1) {
 			 	
-			 System.out.println("====Invididual Check In Selected====");
+			 System.out.println("\n====Invididual Check In Selected====");
 			  
 			 System.out.println("Enter your Location");
 			 String location =  sc.nextLine();
@@ -151,7 +151,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 		 }
 		 else {
 			 
-			 System.out.println("====Multiple Check In Selected====");
+			 System.out.println("\n====Multiple Check In Selected====");
 			 ArrayList<Person> listofPeople = new ArrayList<Person>() ;
 			 String state = "y" ;
 	
