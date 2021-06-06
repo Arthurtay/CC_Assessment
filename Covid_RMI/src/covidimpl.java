@@ -338,7 +338,9 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 
 
 
-	
+	/*
+	 * This method will take in the check-in datetime of the user as 'firstTime'
+	 * 'secondTime' will be the last dateTime of when an infected location is assumed as having risk of covid*/
 	@Override
 	public long time_diff(Date firstTime, Date secondTime) {
 		long diff_time = firstTime.getTime() - secondTime.getTime();
