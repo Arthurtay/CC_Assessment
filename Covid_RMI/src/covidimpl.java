@@ -268,6 +268,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	public void checkCovid(CovidRMIClientInf client, String nric) throws RemoteException {
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+			// can return result as different string also
 			String result = null;
 
 			for (Person p : Database) {
@@ -278,9 +279,11 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 							Date covidDate = dateFormat.parse(Log.getDateInfection());
 							Date covidEndDate = dateFormat.parse(Log.getDatePost());
 							if (clientDate.before(covidDate)) {
+								// can return some other place also
 								System.out.println("safe");
 							}
 							else if (clientDate.after(covidDate) && (time_diff(covidEndDate, clientDate)< 0)) {
+								// can return some other place also
 								System.out.print("Damn safe");
 							}
 							else {
