@@ -15,15 +15,17 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 
 	
 	public ArrayList<Person> Database = new ArrayList<Person>() ;
-	
 	public ArrayList<InfectedLocation> LocationLog = new ArrayList<InfectedLocation>();
-	
 	public ArrayList<SuspectedCovid> suspectC = new ArrayList<SuspectedCovid>();
-	
 	private ReentrantLock lock = new ReentrantLock();
-	
 	private ReentrantLock mohLock = new ReentrantLock();
 	
+	
+
+    //================================================================================
+    // 1. Constructor 
+    //================================================================================
+
     public covidimpl() throws java.rmi.RemoteException {
         super();
   	  File file = new File("Database.txt");
@@ -69,7 +71,16 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
   	  }
     }
     
+    //================================================================================
+    // 1. Constructor END
+    //================================================================================
+    
+    
+    
 
+    //================================================================================
+    // 2. Covid Client Function implemention  in Server START
+    //================================================================================
     
 
 	public void checkIn(CovidRMIClientInf client,Person p) throws RemoteException {
@@ -192,72 +203,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 		
 	}
 
-
-
-
-
-
-
-
-
-	@Override
-	public void storeTextToArray(InfectedLocation IL) throws RemoteException, IOException {
-		try {
-		      mohLock.lock();
-			  File f  = new File("covid_location.txt");
-			  PrintWriter write =   new PrintWriter(new FileOutputStream(f,true));
-			   
-			  System.out.println("Updated Infected Location Log");
-			  
-	  		  InfectedLocation InfectedLog = new InfectedLocation(IL.location, IL.dateInfection, IL.datePostInfection); 
-	  		  LocationLog.add(InfectedLog); 
-		 }catch(Exception e) {
-			  System.out.println(e);
-			 
-		 }finally {
-			 mohLock.unlock();
-		 }
-	}
-
-
-
-
-	@Override
-	public String getLatestLocationDate(String locationInput) throws RemoteException {
-		
-		String latestLocationDate = null;
-		File fileLocation = new File("covid_location.txt");
-	  	 ArrayList<String> latestTime = new ArrayList<String>();
-	  	  try {
-	  		  BufferedReader br = new BufferedReader(new FileReader(fileLocation));
-	  		  String st;
-	  	  
-	  	  //continuous read file 
-	  		  while ((st = br.readLine()) != null) 
-	  		  {
-	  		 //For each line being read. split the text by delimiter comma.
-	  			  String[] tokens = st.split(","); 
-	  		 
-	  			  if (tokens[0].equals(locationInput)) {
-	  				  latestTime.add(tokens[2]);
-	  				  
-	  			  }
-	  		
-	  		  }
-	  		  
-	  		latestLocationDate = latestTime.get(latestTime.size()-1);
-	  		System.out.println(locationInput + " is suspected of Covid until " + latestLocationDate);
-	  	  }
-	  	  catch(Exception e) {
-	  		  System.out.println(e);
-	  	  }
-	  	  
-		return latestLocationDate;
-	}
-
-
-
-
+	
 	@Override
 	public void checkCovid(CovidRMIClientInf client, String nric) throws RemoteException {
 		try {
@@ -300,6 +246,58 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 		
 	}
 
+
+    //================================================================================
+    // 2. Covid Client END
+    //================================================================================
+	
+
+    //================================================================================
+    // 3.Moh Officer Client Function implemention  in Server START
+    //================================================================================
+	
+	
+
+
+
+	@Override
+	public String getLatestLocationDate(String locationInput) throws RemoteException {
+		
+		String latestLocationDate = null;
+		File fileLocation = new File("covid_location.txt");
+	  	 ArrayList<String> latestTime = new ArrayList<String>();
+	  	  try {
+	  		  BufferedReader br = new BufferedReader(new FileReader(fileLocation));
+	  		  String st;
+	  	  
+	  	  //continuous read file 
+	  		  while ((st = br.readLine()) != null) 
+	  		  {
+	  		 //For each line being read. split the text by delimiter comma.
+	  			  String[] tokens = st.split(","); 
+	  		 
+	  			  if (tokens[0].equals(locationInput)) {
+	  				  latestTime.add(tokens[2]);
+	  				  
+	  			  }
+	  		
+	  		  }
+	  		  
+	  		latestLocationDate = latestTime.get(latestTime.size()-1);
+	  		System.out.println(locationInput + " is suspected of Covid until " + latestLocationDate);
+	  	  }
+	  	  catch(Exception e) {
+	  		  System.out.println(e);
+	  	  }
+	  	  
+		return latestLocationDate;
+	}
+
+
+
+
+
+
 	
 	@Override
 	public long time_diff(Date firstTime, Date secondTime) {
@@ -311,29 +309,76 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	}
 
 
+	
 	@Override
-	public String insertLog(String locationCovid, String dateAlert, String datePost) {
-		// TODO Auto-generated method stub
-		String result = null;
-		File f =new File("covid_location.txt");
-		PrintWriter pw;
+	public void storeTextToArray(InfectedLocation IL) throws RemoteException, IOException {
 		try {
-			pw = new PrintWriter(new FileOutputStream(f,true));
-			pw.append(locationCovid +","+ dateAlert +"," +datePost +"\n");
-			
-			pw.close();
-			
-			InfectedLocation IL = new InfectedLocation(locationCovid, dateAlert, datePost);
-			
-			storeTextToArray(IL);
-			result = "\n"+ "Location: " + locationCovid + " is at risk from " + dateAlert + " to "+ datePost;
-			System.out.println(result +"\n"+ "- Declared by MOH officer.");
-			System.out.println("--------------------------------");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return result;
+		      mohLock.lock();
+
+			   
+			  System.out.println("Updated Infected Location Log");
+			  
+	  		  InfectedLocation InfectedLog = new InfectedLocation(IL.location, IL.dateInfection, IL.datePostInfection); 
+	  		  LocationLog.add(InfectedLog); 
+		 } finally {
+			 mohLock.unlock();
+		 }
+	}
+
+
+	
+	@Override
+	public void insertLog(officerClient mohClient,String locationCovid, String dateAlert, String datePost) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+
+		 Thread MohThread = new Thread(new Runnable() {
+			 
+				String result = "Empty";
+				File f =new File("covid_location.txt");
+				PrintWriter pw;
+				
+				@Override
+				public void run() {
+					Random rg = new Random();
+					int timer = rg.nextInt(10000);  				
+					try {							
+						
+	
+							mohLock.lock();
+							pw = new PrintWriter(new FileOutputStream(f,true));
+							pw.append(locationCovid +","+ dateAlert +"," +datePost +"\n");
+							
+							pw.close();
+							
+							InfectedLocation IL = new InfectedLocation(locationCovid, dateAlert, datePost);
+							
+							storeTextToArray(IL);
+							result = "\n"+ "Location: " + locationCovid + " is at risk from " + dateAlert + " to "+ datePost;
+							System.out.println(result +"\n"+ "- Declared by MOH officer.");
+							System.out.println("--------------------------------");
+					        mohClient.confirmation(result);
+							Thread.sleep(timer);
+							
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (RemoteException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} finally {
+						mohLock.unlock();
+						System.out.print("Moh Lock is free");
+					}
+					
+				}    
+			});
+		
+		
+	
 	}
 
 
@@ -378,6 +423,12 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 		 
 		return(IL);
 	}
+	
+	
+    //================================================================================
+    // 3.Moh Officer Client Function implemention  in Server END
+    //================================================================================
+	
 	
 	
 
