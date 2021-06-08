@@ -88,7 +88,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
     
 
     /**
-     * 1.Writes the Person's check-in information into a text file(perm storage) and append into the  temporary database storage(arraylist)
+     * 1.Writes the Person's check-in information into a text file and append into the arraylist
      * 2.Each Invokation of method creates a thread to process the task
      * 3.Thread will only process task after obtaining the lock and unlocks after finishing the task  
      * @param  p- A Person object that contains the user's information to be check in
@@ -141,17 +141,17 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	}
 
     /**
-     * 1.Check if there is a valid Check-In information for today based on NRIC,Location 
-     * before allowing checkout to process
-     * 2.Writes the Person's check-out information into a text file(perm storage) and append into the temporary database storage(arraylist)
+     * 1.Check if there is a valid
+     * 2.Writes the Person's check-out information into a text file and append into the arraylist
      * 3.Each Invokation of method creates a thread to process the task
      * 4.Thread will only process task after obtaining the lock and unlocks after finishing the task  
-     * @param  p- A Person object that contains the user's information to be check out
+     * @param  p- A Person object that contains the user's information to be check in
      * @param  client- used to do callback for the client
      * @throws RemoteException
      */
 	public void checkOut(CovidRMIClientInf client,Person p) throws RemoteException {
-
+		// TODO Auto-generated method stub
+		
 		
 		 Thread checkOutThread = new Thread(new Runnable() {
 			 boolean checkout = false;
@@ -169,7 +169,6 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 					    	  
 							  Date recordDate = dateFormat.parse(record.time);
 							  Date currentDate = dateFormat.parse(p.time);
-							  
 					    	  //Check if there is existing check in record for the current day
 					    	  if( record.location.equals(p.location) && record.nric.equals(p.nric) && record.location.equals(p.location)  ) {
 					    		  checkout = true;
@@ -204,7 +203,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 						e.printStackTrace();
 					}
 					finally {
-						//only attempts to unlock if checkout was true 
+					 //only attempts to unlock if checkout was true 
 						if(checkout) {
 							lock.unlock();
 						
@@ -220,17 +219,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 		
 	}
 
-	
-    /**
-     * 1.Iterating through an arraylist from the client and writes the Person's check-out information into a text file 
-     * and append into the temporary database storage(arraylist)
-     * 2.Writes the Person's check-out information into a text file and append into the arraylist
-     * 3.Each Invocation of method creates a thread to process the task
-     * 4.Thread will only process task after obtaining the lock and unlocks after finishing the task  
-     * @param  listofPeople- An Arraylist containing Person object that contains the user's information to be check in
-     * @param  client- used to do callback for the client
-     * @throws RemoteException
-     */
+
 	
 	public void multipleCheckIn(CovidRMIClientInf client,ArrayList<Person> listofPeople) throws RemoteException {
 			
@@ -273,13 +262,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 		
 	}
 
-    /**
-     * 1.Iterating through an arraylist of people's record and covid location log to determine if a suspected individual has covid
-     * Based on nric,location,date. 
-     * @param  nric- used as a primary key to uniquely identify the records belonging to a person.
-     * @param  client- used to do callback for the client
-     * @throws RemoteException
-     */
+	
 	@Override
 	public void checkCovid(CovidRMIClientInf client, String nric) throws RemoteException {
 		

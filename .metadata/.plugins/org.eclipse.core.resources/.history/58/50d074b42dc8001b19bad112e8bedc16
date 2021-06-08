@@ -276,7 +276,8 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
     /**
      * 1.Iterating through an arraylist of people's record and covid location log to determine if a suspected individual has covid
      * Based on nric,location,date. 
-     * @param  nric- used as a primary key to uniquely identify the records belonging to a person.
+     * and append into the temporary database storage(arraylist)
+     * @param  nric- An Arraylist containing Person object that contains the user's information to be check in
      * @param  client- used to do callback for the client
      * @throws RemoteException
      */

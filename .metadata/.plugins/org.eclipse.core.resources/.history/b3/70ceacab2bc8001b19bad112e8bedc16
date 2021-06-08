@@ -88,7 +88,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
     
 
     /**
-     * 1.Writes the Person's check-in information into a text file(perm storage) and append into the  temporary database storage(arraylist)
+     * 1.Writes the Person's check-in information into a text file and append into the arraylist
      * 2.Each Invokation of method creates a thread to process the task
      * 3.Thread will only process task after obtaining the lock and unlocks after finishing the task  
      * @param  p- A Person object that contains the user's information to be check in
@@ -143,7 +143,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
     /**
      * 1.Check if there is a valid Check-In information for today based on NRIC,Location 
      * before allowing checkout to process
-     * 2.Writes the Person's check-out information into a text file(perm storage) and append into the temporary database storage(arraylist)
+     * 2.Writes the Person's check-out information into a text file and append into the arraylist
      * 3.Each Invokation of method creates a thread to process the task
      * 4.Thread will only process task after obtaining the lock and unlocks after finishing the task  
      * @param  p- A Person object that contains the user's information to be check out
@@ -273,13 +273,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 		
 	}
 
-    /**
-     * 1.Iterating through an arraylist of people's record and covid location log to determine if a suspected individual has covid
-     * Based on nric,location,date. 
-     * @param  nric- used as a primary key to uniquely identify the records belonging to a person.
-     * @param  client- used to do callback for the client
-     * @throws RemoteException
-     */
+	
 	@Override
 	public void checkCovid(CovidRMIClientInf client, String nric) throws RemoteException {
 		
