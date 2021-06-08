@@ -42,15 +42,15 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 				
 	}
 
-	 @Override
-	 public void retrieveHistory() throws RemoteException {
-			// TODO Auto-generated method stub
-	 		
-	 }
+	@Override
+	public void retrieveHistory() throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
 	
-	 public covidclient() throws RemoteException{
-			
-	 }
+	public covidclient() throws RemoteException{
+		
+	}
 	
 	 public static void main(String[] args) throws IOException {
 		 
@@ -73,9 +73,10 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 
 	  
 	  try {
-		  
 		covidclient client = new covidclient();
+		
 		covid service = (covid)  Naming.lookup("rmi://" + reg_host + ":" + reg_port + "/CovidCheckInService");
+		
 		
 
 	     Scanner sc =new Scanner(System.in);
@@ -86,49 +87,52 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 		 String nric = sc.nextLine();
 	     
 		 System.out.println("\nWelcome to the Check In client " + name + " " + nric + "!"  ); 
+
 		 service.checkCovid(client, nric);
 		 
 
 	     while(true) {
-	    	 
-			  	 SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");	 
-			  	 Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
+			  SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");	 
+			  Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
 			 
-			   	 System.out.println("\nEnter Number for Selection");
-			   	 System.out.println("1.Individual Check In");
-				 System.out.println("2.Group Check In");
-				 System.out.println("3.Checkout");
-				 int option = Integer.parseInt(sc.nextLine());
-				 
-				 
-				 
-				 	switch(option) {
-				 		case 1:
-				 			 ClientCheckIn(sc,service,client,name,nric);
-							 break;
-				 		case 2:
-				 			ClientMultipleCheckIn(sc,service,client,name,nric);
-				 			break;
-				 		case 3:
-				 			ClientCheckOut(sc,service,client,name,nric);
-				 			break;
-				 		default:
-				 			System.out.println("Invalid option,please Key in a valid option");
-				 
-				 
-				 	}
+	     System.out.println("\nEnter Number for Selection");
+		 System.out.println("1.Individual Check In");
+		 System.out.println("2.Group Check In");
+		 System.out.println("3.Checkout");
+		 int option = Integer.parseInt(sc.nextLine());
+		 
+		 
+		 
+		 	switch(option) {
+		 		case 1:
+		 			 ClientCheckIn(sc,service,client,name,nric);
+					 break;
+		 		case 2:
+		 			ClientMultipleCheckIn(sc,service,client,name,nric);
+		 			break;
+		 		case 3:
+		 			ClientCheckOut(sc,service,client,name,nric);
+		 			break;
+		 		default:
+		 			System.out.println("Invalid option,please Key in a valid option");
+		 
+		 
+		 	}
+
+	
+		 service.checkCovid(client, nric);
+		 
+		 
+		 
 		
-			
-				 service.checkCovid(client, nric);
-			 
-	     	}//End of While Loop
+	   }//End of While Loop
 	   	  
-	  	}catch(NotBoundException e) {
+	  }catch(NotBoundException e) {
 		  System.out.println(e);
 		  
-	  	 }
+	  }
 	  
-}
+	}
 	 
 	 /**
 	  * Function takes in user's input for indvidual check in and invoke check-in function in the RMI Server 
@@ -158,7 +162,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 	 }
 	 
 	 /**
-	  * Function takes in user's input for indvidual check out and invoke check-out function in the RMI Server 
+	  * 
 	  * @param sc- Scanner to scan user input for multiple check in
 	  * @param service- used to invoke RMI Server function
 	  * @param client - pass client through invoked function for callback
@@ -187,7 +191,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 	 
 	 
 	 /**
-	  * Function takes in user's input for multiple check out and invoke multiple-checkIn function in the RMI Server 
+	  * 
 	  * @param sc- Scanner to scan user input for multiple check in
 	  * @param service- used to invoke RMI Server function
 	  * @param client - pass client through invoked function for callback

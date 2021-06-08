@@ -187,7 +187,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 	 
 	 
 	 /**
-	  * Function takes in user's input for multiple check out and invoke multiple-checkIn function in the RMI Server 
+	  * 
 	  * @param sc- Scanner to scan user input for multiple check in
 	  * @param service- used to invoke RMI Server function
 	  * @param client - pass client through invoked function for callback

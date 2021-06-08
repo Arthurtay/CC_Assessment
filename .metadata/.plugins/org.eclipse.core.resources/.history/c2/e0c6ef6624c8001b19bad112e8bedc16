@@ -40,10 +40,10 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
   		  System.out.println("\nActivity Record\n");
   		  System.out.println("--------------------------------");
   	  
-  		  //continuous read file 
+  	  //continuous read file 
   		  while ((st = br.readLine()) != null) 
   		  {
-  			  //For each line being read. split the text by delimiter comma.
+  		 //For each line being read. split the text by delimiter comma.
   			  String[] tokens = st.split(","); 
   			  System.out.println("NRIC: "+tokens[0]);
   			  System.out.println("Name: "+tokens[1]);
@@ -59,7 +59,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
   		  br = new BufferedReader(new FileReader(fileLocation));
   		 while ((st = br.readLine()) != null) 
  		  {
-  			  //For each line being read. split the text by delimiter comma.
+ 		 //For each line being read. split the text by delimiter comma.
  			  String[] tokens = st.split(","); 
  			  System.out.println(tokens[0] +" is infected from, "+ tokens[1] + " till "+ tokens[2] +"\n");
  			  InfectedLocation InfectedLog = new InfectedLocation(tokens[0],tokens[1],tokens[2]); 
