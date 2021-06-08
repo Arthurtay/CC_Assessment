@@ -87,11 +87,10 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject implemen
 		System.out.println("\n");
 		
 		/**
-		 * dateAlert = current datetime
-		 * datePost = (dateAlert + 14 days) to indicate timeframe of infected location and set a date for when location is covid free
-		 * ===============================
-		 * printedDateAlert = officer input own datetime
-		 * newDatePost = (printedDateAlert + 14 days)
+		 * @dateAlert : current datetime
+		 * @datePost : (dateAlert + 14 days) to indicate timeframe of infected location and set a date for when location is covid free
+		 * @printedDateAlert : officer input own datetime
+		 * @newDatePost : (printedDateAlert + 14 days)
 		 * */
 
 		
@@ -100,8 +99,9 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject implemen
 	    Date date = new Date();  
 	    String dateAlert = dateFormat.format(date);
 	    
-		// If officer typed yes to declaring location NOW, then current datetime will be taken
-		// instantiate calendar to begin process of adding in 14 days to get datetime of when location will be Covid Free
+		/** If officer typed yes to declaring location NOW, then current datetime will be taken
+		* instantiate calendar to begin process of adding in 14 days to get datetime of when location will be Covid Free
+		*/
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date());
 		c.add(Calendar.DAY_OF_MONTH, 14);
