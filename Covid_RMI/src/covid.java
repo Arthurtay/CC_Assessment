@@ -7,7 +7,7 @@ public interface covid extends java.rmi.Remote {
 /**
  * Function's signature to be implemented in the server
  * @param client
- * @param p - 
+ * @param p  
  * @throws java.rmi.RemoteException
  */
 public void checkIn(CovidRMIClientInf client, Person p) throws java.rmi.RemoteException;

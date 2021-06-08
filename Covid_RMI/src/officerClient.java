@@ -32,7 +32,7 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject implemen
     /** 
      * 1. Retrieves latest updated infected location by calling callback o.IL method
      * @param newIL- arrayList instantiated from the main implementation class to callback here
-     * @throws RemoteException
+     * @throws java.rmi.RemoteException
      * 
 	*/  
 	
