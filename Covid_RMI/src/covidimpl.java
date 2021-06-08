@@ -369,12 +369,24 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 
 
 
+	/**
+     * 1.Iterating through an arraylist from the client and writes the Person's check-out information into a text file 
+     * and append into the temporary database storage(arraylist)
+     * 2.Writes the Person's check-out information into a text file and append into the arraylist
+     * 3.Each Invocation of method creates a thread to process the task
+     * 4.Thread will only process task after obtaining the lock and unlocks after finishing the task  
+     * @param  listofPeople- An Arraylist containing Person object that contains the user's information to be check in
+     * @param  client- used to do callback for the client
+     * @throws RemoteException
+     */
 
 
-
-	/*
-	 * This method will take in the check-in datetime of the user as 'firstTime'
-	 * 'secondTime' will be the last dateTime of when an infected location is assumed as having risk of covid*/
+	/**
+	 * 1. Get datetime difference in days to check if user is within time of infection
+	 * @param firstTime- Date variable passed in from the end date of infected location
+	 * @param secondTime - Date variable passed in from the day of check in for the user
+	 * @return primitive long date
+	 * */
 	@Override
 	public long time_diff(Date firstTime, Date secondTime) {
 		long diff_time = firstTime.getTime() - secondTime.getTime();
@@ -386,7 +398,14 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 
 
 	
-
+	/**
+	 * 1. Inserts new infected location and date of declaration as well as the end date of infected location
+	 * @param mohClient- used to do callback for the officer client
+	 * @param locationCovid- location entered by the MoH officer
+	 * @param dateAlert- date entered by the MoH officer, date input is either date Now or other dates
+	 * @param datePost- end of date for the covid infected location, +14 days after dateAlert
+	 * @throws RemoteException
+	 * */
 	@Override
 	public void insertLog(OfficerRMIClientInf mohClient,String locationCovid, String dateAlert, String datePost) throws RemoteException {
 		// TODO Auto-generated method stub
@@ -442,6 +461,11 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	
 	}
 
+	/**
+	 * 1. Stores updated information of the newly added location, date of declaration and end of date of infection of location into the array list instantiated
+	 * @param InfectedLocation IL- Arraylist that stores all InfectedLocation
+	 * @throws RemoteException, IOException
+	 * */
 	@Override
 	public void storeTextToArray(InfectedLocation IL) throws RemoteException, IOException {
 			  System.out.println("Updated Infected Location Log");
@@ -454,7 +478,10 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 
 	
 
-
+	/**
+	 * 1. Displays updated infected location by using getter method to print out
+	 * @throws RemoteException
+	 * */
 	@Override
 	public void DisplayInfectedLocation() throws RemoteException {
 		System.out.println("--------------------------------\n");
