@@ -29,8 +29,12 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject implemen
 	}
 	
 	
-    // The o.IL() function has become a call back for this to print out the latest location after inserting
-	// Once officer updates the server on a new infected location,  
+    /** 
+     * 1. Retrieves latest updated infected location by calling callback o.IL method
+     * @param newIL- arrayList instantiated from the main implementation class to callback here
+     * @throws RemoteException
+     * 
+	*/  
 	
 	public void retrieveLatestLocation(ArrayList<InfectedLocation> newIL) throws java.rmi.RemoteException{
 		System.out.println("--------------------------------\n");
@@ -66,8 +70,7 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject implemen
 		
 		officer o = (officer) Naming.lookup("rmi://" + reg_host + ":" + reg_port + "/CovidCheckInService");
 		
-		// Request for officer input
-		/*Inputs include:
+		/** Request for officer input. Inputs include:
 		 * 1. Infected location
 		 * 2. Date state: Declare location today(NOW) or other day
 		 * 
@@ -83,7 +86,7 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject implemen
 		
 		System.out.println("\n");
 		
-		/*
+		/**
 		 * dateAlert = current datetime
 		 * datePost = (dateAlert + 14 days) to indicate timeframe of infected location and set a date for when location is covid free
 		 * ===============================

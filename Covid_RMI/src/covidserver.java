@@ -21,7 +21,6 @@ public class covidserver {
 	
 	
 	  public static void main(String args[]) {
-	     	//Create the new Calculator server
 	   if (args.length == 1)
 		port = Integer.parseInt(args[0]);
 		
