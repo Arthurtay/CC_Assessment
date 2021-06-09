@@ -28,13 +28,6 @@ public interface officer extends java.rmi.Remote {
 	
 	/**
 	 * Function's signature to be implemented in the server
-	 * @param locationInput
-	 * @throws java.rmi.RemoteException
-	 */
-//	public String getLatestLocationDate(String locationInput) throws java.rmi.RemoteException;
-	
-	/**
-	 * Function's signature to be implemented in the server
 	 * @param firstTime
 	 * @param secondTime
 	 * @throws java.rmi.RemoteException

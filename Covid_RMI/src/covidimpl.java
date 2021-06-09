@@ -330,39 +330,6 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
     // 3.Moh Officer Client Function implemention  in Server START
     //================================================================================
 	
-//	@Override
-//	public String getLatestLocationDate(String locationInput) throws RemoteException {
-//		
-//		String latestLocationDate = null;
-//		File fileLocation = new File("covid_location.txt");
-//	  	 ArrayList<String> latestTime = new ArrayList<String>();
-//	  	  try {
-//	  		  BufferedReader br = new BufferedReader(new FileReader(fileLocation));
-//	  		  String st;
-//	  	  
-//	  	  //continuous read file 
-//	  		  while ((st = br.readLine()) != null) 
-//	  		  {
-//	  		 //For each line being read. split the text by delimiter comma.
-//	  			  String[] tokens = st.split(","); 
-//	  		 
-//	  			  if (tokens[0].equals(locationInput)) {
-//	  				  latestTime.add(tokens[2]);
-//	  				  
-//	  			  }
-//	  		
-//	  		  }
-//	  		  
-//	  		latestLocationDate = latestTime.get(latestTime.size()-1);
-//	  		System.out.println(locationInput + " is suspected of Covid until " + latestLocationDate);
-//	  	  }
-//	  	  catch(Exception e) {
-//	  		  System.out.println(e);
-//	  	  }
-//	  	  
-//		return latestLocationDate;
-//	}
-
 
 	/**
 	 * 1. Get datetime difference in days to check if user is within time of infection
