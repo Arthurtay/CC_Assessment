@@ -79,6 +79,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 		covidclient client = new covidclient();
 		covid service = (covid)  Naming.lookup("rmi://" + reg_host + ":" + reg_port + "/CovidCheckInService");
 		
+		System.out.println("-----------------User Check In/Out Terminal-----------------\n");
 
 	     Scanner sc =new Scanner(System.in);
 		 System.out.println("Enter Your Name");
@@ -87,7 +88,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 		 System.out.println("Enter your NRIC");
 		 String nric = sc.nextLine();
 	     
-		 System.out.println("\nWelcome to the Check In client " + name + " " + nric + "!"  ); 
+		 System.out.println("\nWelcome " + name + " " + nric + "!"  ); 
 		 service.checkCovid(client, nric);
 		 
 
