@@ -117,6 +117,9 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 				 		case 3:
 				 			ClientCheckOut(sc,service,client,name,nric);
 				 			break;
+				 		case 4: 
+				 			service.clear();
+				 			System.exit(0);
 				 		default:
 				 			System.out.println("Invalid option,please Key in a valid option");
 				 
