@@ -38,6 +38,10 @@ public void multipleCheckIn(CovidRMIClientInf client, ArrayList<Person> p)throws
  */
 public void checkCovid(CovidRMIClientInf client, String nric) throws java.rmi.RemoteException;
 
+/**
+ * Function's signature to be implemented in the server
+ * @throws java.rmi.RemoteException
+ */
 public void clear() throws java.rmi.RemoteException;
  
 }

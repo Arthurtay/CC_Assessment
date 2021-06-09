@@ -21,10 +21,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	private ReentrantLock lock = new ReentrantLock();
 	private ReentrantLock mohLock = new ReentrantLock();
 	
-	public void clear() throws java.rmi.RemoteException{
-		suspectC.clear();
-	}
-
+	
     //================================================================================
     // 1. Constructor 
     //================================================================================
@@ -320,6 +317,14 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 		}
 			
 		
+	}
+	
+	/**
+	 * Clears the suspectC arrayList to avoid any duplication of records everytime user starts up client program
+	 * @throws java.rmi.RemoteException
+	 * */
+	public void clear() throws java.rmi.RemoteException{
+		suspectC.clear();
 	}
 
 
