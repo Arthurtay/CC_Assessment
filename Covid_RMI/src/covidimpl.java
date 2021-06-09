@@ -287,7 +287,6 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			// can return result as different string also
-			String result = null;
 
 			for (Person p : Database) {
 				if (p.getNric().equals(nric)) {
@@ -298,14 +297,13 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 							Date covidEndDate = dateFormat.parse(Log.getDatePost());
 							if (clientDate.before(covidDate)) {
 								// can return some other place also
-								System.out.println("safe");
+								System.out.println(p.getNric() + " is not exposed to covid at " + Log.getLocation());
 							}
 							else if (clientDate.after(covidDate) && (time_diff(covidEndDate, clientDate)< 0)) {
 								// can return some other place also
-								System.out.print("Damn safe");
+								System.out.print(p.getNric() + " is not exposed to covid at " + Log.getLocation());
 							}
 							else {
-								System.out.println(result);
 								SuspectedCovid sc = new SuspectedCovid(p.getNric(), Log.getLocation(), p.getTime());
 								suspectC.add(sc);
 								client.NotifyCovid(suspectC, nric);
@@ -314,8 +312,6 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 					}
 				}
 			}
-			
-
 		}
 		catch(ParseException e) {
 			System.out.println(e);
@@ -334,38 +330,38 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
     // 3.Moh Officer Client Function implemention  in Server START
     //================================================================================
 	
-	@Override
-	public String getLatestLocationDate(String locationInput) throws RemoteException {
-		
-		String latestLocationDate = null;
-		File fileLocation = new File("covid_location.txt");
-	  	 ArrayList<String> latestTime = new ArrayList<String>();
-	  	  try {
-	  		  BufferedReader br = new BufferedReader(new FileReader(fileLocation));
-	  		  String st;
-	  	  
-	  	  //continuous read file 
-	  		  while ((st = br.readLine()) != null) 
-	  		  {
-	  		 //For each line being read. split the text by delimiter comma.
-	  			  String[] tokens = st.split(","); 
-	  		 
-	  			  if (tokens[0].equals(locationInput)) {
-	  				  latestTime.add(tokens[2]);
-	  				  
-	  			  }
-	  		
-	  		  }
-	  		  
-	  		latestLocationDate = latestTime.get(latestTime.size()-1);
-	  		System.out.println(locationInput + " is suspected of Covid until " + latestLocationDate);
-	  	  }
-	  	  catch(Exception e) {
-	  		  System.out.println(e);
-	  	  }
-	  	  
-		return latestLocationDate;
-	}
+//	@Override
+//	public String getLatestLocationDate(String locationInput) throws RemoteException {
+//		
+//		String latestLocationDate = null;
+//		File fileLocation = new File("covid_location.txt");
+//	  	 ArrayList<String> latestTime = new ArrayList<String>();
+//	  	  try {
+//	  		  BufferedReader br = new BufferedReader(new FileReader(fileLocation));
+//	  		  String st;
+//	  	  
+//	  	  //continuous read file 
+//	  		  while ((st = br.readLine()) != null) 
+//	  		  {
+//	  		 //For each line being read. split the text by delimiter comma.
+//	  			  String[] tokens = st.split(","); 
+//	  		 
+//	  			  if (tokens[0].equals(locationInput)) {
+//	  				  latestTime.add(tokens[2]);
+//	  				  
+//	  			  }
+//	  		
+//	  		  }
+//	  		  
+//	  		latestLocationDate = latestTime.get(latestTime.size()-1);
+//	  		System.out.println(locationInput + " is suspected of Covid until " + latestLocationDate);
+//	  	  }
+//	  	  catch(Exception e) {
+//	  		  System.out.println(e);
+//	  	  }
+//	  	  
+//		return latestLocationDate;
+//	}
 
 
 	/**
