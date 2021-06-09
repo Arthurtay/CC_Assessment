@@ -45,6 +45,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 			}
 		}
 		
+		
 				
 	}
 
@@ -109,6 +110,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 				 
 				 	switch(option) {
 				 		case 1:
+				 			service.clear();
 				 			 ClientCheckIn(sc,service,client,nric,name);
 							 break;
 				 		case 2:
