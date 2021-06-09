@@ -159,10 +159,6 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 	  */
 	 public static void ClientCheckOut(Scanner sc,  covid service , covidclient client ,String nric, String name ) throws RemoteException{
 		 
-		//  SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");	 
-		//  Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
-		 
-		 
 		 System.out.println("\n====Invididual Check In Selected====");
 		  
 		 System.out.println("Enter your Location");
