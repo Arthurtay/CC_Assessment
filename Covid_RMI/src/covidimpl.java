@@ -44,8 +44,8 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
   		  {
   			  //For each line being read. split the text by delimiter comma.
   			  String[] tokens = st.split(","); 
-  			  System.out.println("NRIC: "+tokens[0]);
-  			  System.out.println("Name: "+tokens[1]);
+  			  System.out.println("Name: "+tokens[0]);
+  			  System.out.println("NRIC: "+tokens[1]);
   			  System.out.println("Location: "+tokens[2]);
   			  System.out.println("Date & Time of Check In/Out: " + tokens[3]);
   			  System.out.println("\n");
@@ -112,10 +112,10 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 							   
 							  File f  = new File("Database.txt");
 							  PrintWriter write =   new PrintWriter(new FileOutputStream(f,true));
-							  write.append(p.nric +","+ p.name +","+ p.location +","+ p.time + "\n");
+							  write.append(p.name +","+ p.nric +","+ p.location +","+ p.time + "\n");
 							  write.close();  
 					  		  
-							  Person ppl = new Person(p.nric,p.name,p.location,p.time); 
+							  Person ppl = new Person(p.name,p.nric,p.location,p.time); 
 					  		  Database.add(ppl); 
 					  		  
 					  		  client.confirmation("Check in Sucessfully");
@@ -180,10 +180,10 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 						      lock.lock();  
 						      File f  = new File("Database.txt");
 							  PrintWriter write =   new PrintWriter(new FileOutputStream(f,true));
-							  write.append(p.nric +","+ p.name +","+ p.location +","+ p.time + "\n");
+							  write.append(p.name +","+ p.nric +","+ p.location +","+ p.time + "\n");
 							  write.close();  
 							  System.out.println();
-					  		  Person ppl = new Person(p.nric,p.name,p.location,p.time); 
+					  		  Person ppl = new Person(p.name,p.nric,p.location,p.time); 
 					  		  Database.add(ppl); 
 					  		  client.confirmation("Check out sucessfully");
 					  	   	  Thread.sleep(timer);
@@ -247,7 +247,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 							PrintWriter write =   new PrintWriter(new FileOutputStream(f,true));
 					
 							  listofPeople.forEach((ppl) -> {
-							  write.append(ppl.nric +","+ ppl.name +","+ ppl.location +","+ ppl.time + "\n");  
+							  write.append(ppl.name +","+ ppl.nric +","+ ppl.location +","+ ppl.time + "\n");  
 							  });
 							  
 							  write.close();

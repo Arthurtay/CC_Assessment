@@ -109,13 +109,13 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 				 
 				 	switch(option) {
 				 		case 1:
-				 			 ClientCheckIn(sc,service,client,name,nric);
+				 			 ClientCheckIn(sc,service,client,nric,name);
 							 break;
 				 		case 2:
-				 			ClientMultipleCheckIn(sc,service,client,name,nric);
+				 			ClientMultipleCheckIn(sc,service,client,nric,name);
 				 			break;
 				 		case 3:
-				 			ClientCheckOut(sc,service,client,name,nric);
+				 			ClientCheckOut(sc,service,client,nric,name);
 				 			break;
 				 		case 4: 
 				 			service.clear();
@@ -157,7 +157,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 		 String time = ft.format(timestamp);
 		 System.out.println(time);
 		 
-		 Person p = new Person(nric,name,location,time); 
+		 Person p = new Person(name,nric,location,time); 
 		 service.checkIn(client,p);
 	 }
 	 
@@ -180,7 +180,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 		 String time = ft.format(timestamp);
 		 System.out.println(time);
 		 
-		 Person p = new Person(nric,name,location,time); 
+		 Person p = new Person(name,nric,location,time); 
 		 service.checkOut(client, p);
 		 
 	 }
@@ -212,7 +212,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 		 System.out.println(time);
 		 
 		 //Include Indiviual check In 
-		 Person p = new Person(nric,name,location,time);
+		 Person p = new Person(name,nric,location,time);
 		 listofPeople.add(p);
 		 
 		 //While continues to loop and read other checkin members data
@@ -225,7 +225,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 			 System.out.println("Enter Family/Friend NRIC");
 			 String extra_nric = sc.nextLine();
 			  			 
-			 Person p2 = new Person(extra_nric,extra_name,location,time);
+			 Person p2 = new Person(extra_name,extra_nric,location,time);
 			 
 			 listofPeople.add(p2);
 			 
