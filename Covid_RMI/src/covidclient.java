@@ -27,7 +27,6 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 	@Override
 	public void NotifyCovid(ArrayList<SuspectedCovid> suspectC, String nric) throws RemoteException {
 		
-
 		System.out.println("--------------------------");
 		System.out.println("|          ALERT         |");
 		System.out.println("--------------------------");
@@ -67,9 +66,6 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 	    	reg_host = args[0];
 	    	reg_port = Integer.parseInt(args[1]);
 	    }
-		 
-		 
-		 
 
 	  
 	  try {
@@ -140,11 +136,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 	  * @throws RemoteException
 	  */
 	 public static void ClientCheckIn(Scanner sc,  covid service , covidclient client ,String nric, String name ) throws RemoteException{
-		 
-		//  SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");	 
-		//  Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
-		 
-		 
+
 		 System.out.println("\n====Invididual Check In Selected====");
 		  
 		 System.out.println("Enter your Location");

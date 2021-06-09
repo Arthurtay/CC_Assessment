@@ -368,19 +368,6 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	}
 
 
-
-	/**
-     * 1.Iterating through an arraylist from the client and writes the Person's check-out information into a text file 
-     * and append into the temporary database storage(arraylist)
-     * 2.Writes the Person's check-out information into a text file and append into the arraylist
-     * 3.Each Invocation of method creates a thread to process the task
-     * 4.Thread will only process task after obtaining the lock and unlocks after finishing the task  
-     * @param  listofPeople- An Arraylist containing Person object that contains the user's information to be check in
-     * @param  client- used to do callback for the client
-     * @throws RemoteException
-     */
-
-
 	/**
 	 * 1. Get datetime difference in days to check if user is within time of infection
 	 * @param firstTime- Date variable passed in from the end date of infected location
