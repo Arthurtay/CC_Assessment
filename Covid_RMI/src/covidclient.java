@@ -114,9 +114,11 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 				 			 ClientCheckIn(sc,service,client,nric,name);
 							 break;
 				 		case 2:
+				 			service.clear();
 				 			ClientMultipleCheckIn(sc,service,client,nric,name);
 				 			break;
 				 		case 3:
+				 			service.clear();
 				 			ClientCheckOut(sc,service,client,nric,name);
 				 			break;
 				 		case 4: 
