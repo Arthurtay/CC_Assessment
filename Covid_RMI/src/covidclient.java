@@ -39,8 +39,9 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 		
 		
 		for (SuspectedCovid sc : suspectC) {
-			if(sc.getNric().contains(nric)) {
+			if(sc.getNric().equals(nric)) {
 				System.out.println("Possible exposure at " + sc.getLocation() + ", on " + sc.getDateSuspected() + "\n");
+				
 			}
 		}
 		
@@ -98,9 +99,10 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 			  	 Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
 			 
 			   	 System.out.println("\nEnter Number for Selection");
-			   	 System.out.println("1.Individual Check In");
-				 System.out.println("2.Group Check In");
-				 System.out.println("3.Checkout");
+			   	 System.out.println("1. Individual Check In");
+				 System.out.println("2. Group Check In");
+				 System.out.println("3. Checkout");
+				 System.out.println("4. Exit");
 				 int option = Integer.parseInt(sc.nextLine());
 				 
 				 

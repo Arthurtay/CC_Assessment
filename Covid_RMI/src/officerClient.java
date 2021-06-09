@@ -84,6 +84,8 @@ public class officerClient  extends java.rmi.server.UnicastRemoteObject implemen
 		System.out.println("Declare Location at risk with the current time? (y/n)");
 		String dateState = sc.nextLine();
 		
+		
+		
 		System.out.println("\n");
 		
 		/**
