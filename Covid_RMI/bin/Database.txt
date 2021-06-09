@@ -1,6 +1,2 @@
 Arthur Tay,S12345678A,Tampines Mall,06/06/2021 20:49:04
-TestUser,S22W,Temasek Poly,09/06/2021 16:47:29
 TestUser,S22W,RP,09/06/2021 16:51:46
-TestUser,S22W,Tai Seng,09/06/2021 16:52:04
-TestUser,S22W,Macdonald,09/06/2021 16:54:41
-TestUser,S22W,Bedok Mall,09/06/2021 16:54:41
