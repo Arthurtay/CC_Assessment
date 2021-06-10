@@ -112,7 +112,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 							   
 							  File f  = new File("Database.txt");
 							  PrintWriter write =   new PrintWriter(new FileOutputStream(f,true));
-							  write.append(p.name +","+ p.nric +","+ p.location +","+ p.time + "\n");
+							  write.append("\n"+p.name +","+ p.nric +","+ p.location +","+ p.time);
 							  write.close();  
 					  		  
 							  Person ppl = new Person(p.name,p.nric,p.location,p.time); 
@@ -180,7 +180,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 						      lock.lock();  
 						      File f  = new File("Database.txt");
 							  PrintWriter write =   new PrintWriter(new FileOutputStream(f,true));
-							  write.append(p.name +","+ p.nric +","+ p.location +","+ p.time + "\n");
+							  write.append("\n"+p.name +","+ p.nric +","+ p.location +","+ p.time);
 							  write.close();  
 							  System.out.println();
 					  		  Person ppl = new Person(p.name,p.nric,p.location,p.time); 
@@ -247,7 +247,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 							PrintWriter write =   new PrintWriter(new FileOutputStream(f,true));
 					
 							  listofPeople.forEach((ppl) -> {
-							  write.append(ppl.name +","+ ppl.nric +","+ ppl.location +","+ ppl.time + "\n");  
+							  write.append("\n"+ppl.name +","+ ppl.nric +","+ ppl.location +","+ ppl.time);  
 							  });
 							  
 							  write.close();
@@ -383,7 +383,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	
 						 	mohLock.lock();
 							pw = new PrintWriter(new FileOutputStream(f,true));
-							pw.append(locationCovid +","+ dateAlert +"," +datePost +"\n");
+							pw.append("\n"+locationCovid +","+ dateAlert +"," +datePost);
 							
 							pw.close();
 							
