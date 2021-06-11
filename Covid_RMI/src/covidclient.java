@@ -49,11 +49,7 @@ public class covidclient  extends java.rmi.server.UnicastRemoteObject implements
 				
 	}
 
-	 @Override
-	 public void retrieveHistory() throws RemoteException {
-			// TODO Auto-generated method stub
-	 		
-	 }
+
 	
 	 public covidclient() throws RemoteException{
 			

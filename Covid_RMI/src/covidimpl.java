@@ -102,8 +102,8 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 					@Override
 					public void run() {
 						Random rg = new Random();
-						int timer = 5000;
-								//rg.nextInt(10000);  				
+						int timer = rg.nextInt(1000);  
+										
 						try {							
 							
 						  	
@@ -124,12 +124,12 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 						} catch (java.rmi.RemoteException e) {
 							e.printStackTrace();
 						} catch(InterruptedException ee) {
-							
+							ee.printStackTrace();
 						}catch(FileNotFoundException eee) {
-							
+							eee.printStackTrace();
 						}finally {
+							//unlocks once task is completed
 							lock.unlock();
-							System.out.print("Lock is free");
 						}
 						
 					}    
@@ -157,12 +157,10 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 				@Override
 				public void run() {
 					Random rg = new Random();
-					int timer = 5000;
-							//rg.nextInt(10000);  				
+					int timer = rg.nextInt(1000);  
+									
 					try {							
 						SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-					  	//Thread.sleep(timer);
-					
 					        
 					      for(Person record: Database) {
 					    	  
@@ -238,7 +236,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 					@Override
 					public void run() {
 						Random rg = new Random();
-						int timer = rg.nextInt(10000);  				
+						int timer = rg.nextInt(1000);  				
 						try {							
 							
 						    client.confirmation("Processing check in");
@@ -257,9 +255,9 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 						} catch (java.rmi.RemoteException e) {
 							e.printStackTrace();
 						} catch(InterruptedException ee) {
-							
+							ee.printStackTrace();
 						}catch(FileNotFoundException eee) {
-							
+							eee.printStackTrace();
 						}finally {
 							lock.unlock();
 				
@@ -286,7 +284,6 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			// can return result as different string also
-
 			for (Person p : Database) {
 				if (p.getNric().equals(nric)) {
 					for (InfectedLocation Log: LocationLog) {
@@ -365,9 +362,9 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 	 * */
 	@Override
 	public void insertLog(OfficerRMIClientInf mohClient,String locationCovid, String dateAlert, String datePost) throws RemoteException {
-		// TODO Auto-generated method stub
 		
-		System.out.println("This is called");
+		
+	
 		 Thread MohThread = new Thread(new Runnable() {
 			 
 				String result = "Empty";
@@ -377,7 +374,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 				@Override
 				public void run() {
 					Random rg = new Random();
-				//	int timer = rg.nextInt(10000);  				
+		
 					try {							
 						
 	
@@ -398,13 +395,10 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 							Thread.sleep(10);
 							
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (RemoteException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} finally {
 						mohLock.unlock();

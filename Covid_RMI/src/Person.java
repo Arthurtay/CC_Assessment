@@ -6,17 +6,14 @@ public class Person implements Serializable{
 	String name;
 	String location;
 	String time;
-    int suspectCovid;
-    //check out or in
-    int recordType;
+ 
     
 	 public Person(String name, String nric, String location,String time) {
 		 this.name = name;
 		 this.nric = nric;
 		 this.location = location;
 		 this.time = time;
-		 this.suspectCovid = suspectCovid;
-		 this.recordType = recordType;
+
 	 } 
 	 
 	 
@@ -38,13 +35,6 @@ public class Person implements Serializable{
 		 this.time = newTime;
 	 }
 	 
-	 public void setSuspect(int newSuspect) {
-		 this.suspectCovid = newSuspect;
-	 }
-	 
-	 public void setRecordType(int newRecordType) {
-		 this.recordType = newRecordType;
-	 }
 	 
 	 public String getName() {
 		 return this.name;
@@ -62,11 +52,5 @@ public class Person implements Serializable{
 		 return this.time;
 	 }
 	 
-	 public int getSuspect() {
-		 return this.suspectCovid;
-	 }
-	 
-	 public int getRecordType() {
-		 return this.recordType;
-	 }	
+
 }
