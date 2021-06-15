@@ -246,6 +246,7 @@ public class covidimpl extends java.rmi.server.UnicastRemoteObject  implements c
 					
 							  listofPeople.forEach((ppl) -> {
 							  write.append("\n"+ppl.name +","+ ppl.nric +","+ ppl.location +","+ ppl.time);  
+							  Database.add(ppl);
 							  });
 							  
 							  write.close();
